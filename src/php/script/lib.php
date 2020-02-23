@@ -44,7 +44,7 @@ function get_api_client()
     global $api;
 
     if (!$api) {
-        $api = new ApiClient(APIAUTH, APIHOST, defined('APIIP') ? APIIP : null);
+        $api = new ApiClient(APIAUTH, APIHOST, defined('APIIP') ? APIIP : '127.0.0.1');
     }
 
     return $api;
