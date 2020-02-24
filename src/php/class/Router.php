@@ -2,6 +2,9 @@
 class Router
 {
     private static $routes = [
+        '/change-instances' => ['PAGE' => 'change-instances'],
+        '/change-context' => ['PAGE' => 'change-context'],
+
         '/blend/([a-z]+)' => ['BLEND_NAME', 'PAGE' => 'blend/index'],
 
         '/api/blend/([a-z]+)' => ['BLEND_NAME', 'PAGE' => 'blend/index', 'JSON' => true],

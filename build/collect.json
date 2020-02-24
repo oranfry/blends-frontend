@@ -1,6 +1,6 @@
 {
     "icon": {
-        "into": "../public/img/icon",
-        "directory": "icon"
+        "into": "public/img/icon",
+        "directory": "src/icon"
     }
 }

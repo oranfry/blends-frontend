@@ -1,5 +1,5 @@
 <?php
-define('PRINTER_FILE', BLENDS_HOME . '/printme');
+define('PRINTER_FILE', APP_HOME . '/printme');
 // define('DEBUG_CI', true);
 
 class config_myblends

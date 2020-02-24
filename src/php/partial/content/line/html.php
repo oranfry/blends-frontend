@@ -11,7 +11,7 @@
                     <div class="form-row">
                         <div class="form-row__label">parent</div>
                         <div class="form-row__value">
-                            <?php require BLENDS_HOME . "/src/php/partial/fieldtype/text.php"; ?>
+                            <?php require APP_HOME . "/src/php/partial/fieldtype/text.php"; ?>
                         </div>
                         <div style="clear: both"></div>
                     </div>
@@ -32,7 +32,7 @@
                     <div class="form-row">
                         <div class="form-row__label"><?= @$field->label ?? $field->name ?></div>
                         <div class="form-row__value">
-                            <?php require BLENDS_HOME . "/src/php/partial/fieldtype/{$field->type}.php"; ?>
+                            <?php require APP_HOME . "/src/php/partial/fieldtype/{$field->type}.php"; ?>
                         </div>
                         <div style="clear: both"></div>
                     </div>
@@ -73,7 +73,7 @@
                 $parent_query .= '&date=' . $line->date;
             }
 
-            require BLENDS_HOME . "/src/php/partial/showas/list.php";
+            require APP_HOME . "/src/php/partial/showas/list.php";
         }
     }
     ?>

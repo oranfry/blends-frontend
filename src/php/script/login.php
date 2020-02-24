@@ -4,7 +4,9 @@ if (@$_POST['auth'] == Config::get()->password) {
 }
 
 if (@$_SESSION["AUTH"] == Config::get()->password) {
-    header("Location: /blend/" . @Config::get()->blends[0]);
+    $api = get_api_client();
+    $blends = $api->blends();
+    header("Location: /blend/" . $blends[0]->name);
     die('Redirecting...');
 }
 

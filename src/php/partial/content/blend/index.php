@@ -6,7 +6,7 @@ $blend = $blend_lookup[BLEND_NAME];
 <h2 class="only-wide"><?= @$blend->label ?: $blend->name ?></h2>
 
 <?php
-require BLENDS_HOME . '/src/php/partial/showas/' . SHOWAS . '.php';
+require APP_HOME . '/src/php/partial/showas/' . SHOWAS . '.php';
 ?>
 
 <div class="modal" id="bulk-edit-modal" style="background-color: #eee">
@@ -16,7 +16,7 @@ require BLENDS_HOME . '/src/php/partial/showas/' . SHOWAS . '.php';
                 $options = @$suggested_values[$field->name];
                 $value = @$generic->{$field->name};
                 $checked = property_exists($generic, $field->name);
-                $field_inc = BLENDS_HOME . "/src/php/partial/fieldtype/{$field->type}.php";
+                $field_inc = APP_HOME . "/src/php/partial/fieldtype/{$field->type}.php";
 
                 if (!file_exists($field_inc)) {
                     continue;
@@ -63,7 +63,7 @@ require BLENDS_HOME . '/src/php/partial/showas/' . SHOWAS . '.php';
                     $options = @$suggested_values[$field->name];
                     $value = @$generic->{$field->name};
                     $checked = property_exists($generic, $field->name);
-                    $field_inc = BLENDS_HOME . "/src/php/partial/fieldtype/{$field->type}.php";
+                    $field_inc = APP_HOME . "/src/php/partial/fieldtype/{$field->type}.php";
 
                     if (!file_exists($field_inc)) {
                         continue;

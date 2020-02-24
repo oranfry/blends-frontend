@@ -1,10 +1,10 @@
 <?php
 
-foreach (PLUGINS as $plugin) {
-    $dir = BLENDS_HOME . "/plugins/{$plugin}/icon";
+with_plugins(function($pdir, $name) use ($latests){
+    $dir = "{$pdir}/src/icon";
 
     if (!is_dir($dir)) {
-        continue;
+        return;
     }
 
     $handle = opendir($dir);
@@ -20,4 +20,4 @@ foreach (PLUGINS as $plugin) {
     }
 
     closedir($handle);
-}
+});

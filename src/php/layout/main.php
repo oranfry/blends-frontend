@@ -30,11 +30,11 @@
         </style>
 </head>
 <body class="wsidebar">
-    <?php require BLENDS_HOME . '/src/php/partial/nav.php'; ?>
+    <?php require APP_HOME . '/src/php/partial/nav.php'; ?>
     <?php if (@$GLOBALS['title']): ?>
         <h3><?= $GLOBALS['title'] ?></h3>
     <?php endif ?>
-    <?php require BLENDS_HOME . '/src/php/partial/content/' . PAGE . '.php'; ?>
+    <?php require APP_HOME . '/src/php/partial/content/' . PAGE . '.php'; ?>
     <?php
         foreach (ContextVariableSet::getAll() as $active) {
             $active->enddisplay();
@@ -49,7 +49,7 @@
             echo "var back = '" . BACK . "';";
         }
         ?></script>
-    <?php @include BLENDS_HOME . '/src/php/partial/js/' . PAGE . '.php'; ?>
+    <?php @include APP_HOME . '/src/php/partial/js/' . PAGE . '.php'; ?>
     <script type="text/javascript" src="/js/app.<?= latest('js') ?>.js"></script>
     <i class="icon icon--tick" style="position: fixed; top: 0.5em; right: 0.5em; z-index: 99999999999"></i>
 </body>

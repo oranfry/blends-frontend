@@ -23,7 +23,7 @@
                     }
                 ?>
             <?php endif ?>
-            <?php @include BLENDS_HOME . '/src/php/partial/nav/' . PAGE . '.php'; ?>
+            <?php @include APP_HOME . '/src/php/partial/nav/' . PAGE . '.php'; ?>
             <input type="hidden" name="_returnurl" value="<?= htmlspecialchars_decode($_SERVER['REQUEST_URI']) ?>">
             <div id="new-vars-here" style="display: none"></div>
         </div>
