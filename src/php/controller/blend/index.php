@@ -6,8 +6,14 @@ use contextvariableset\Hidden;
 use contextvariableset\Showas;
 
 $api = get_api_client();
-$blend = $api->blend(BLEND_NAME);
-$blend_lookup = [BLEND_NAME => $blend];
+$blends = $api->blends();
+$blend_lookup = [];
+
+foreach ($blends as $_blend) {
+    $blend_lookup[$_blend->name] = $_blend;
+}
+
+$blend = $blend_lookup[BLEND_NAME];
 $linetype_lookup = [];
 $all_fields = $blend->fields;
 
@@ -235,8 +241,8 @@ foreach ($filters as $filter) {
 return [
     'records' => $records,
     'blend_lookup' => $blend_lookup,
-    'linetypes' => $linetypes,
     'linetype_lookup' => $linetype_lookup,
+    'linetypes' => $linetypes,
     'classes' => $classes,
     'fields' => $fields,
     'all_fields' => $all_fields,

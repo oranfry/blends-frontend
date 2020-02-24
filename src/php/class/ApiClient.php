@@ -159,6 +159,11 @@ class ApiClient
         return json_decode($this->execute($endpoint, $middle));
     }
 
+    function blends()
+    {
+        return json_decode($this->execute("/blend/list"));
+    }
+
     function blend($blend)
     {
         return json_decode($this->execute("/blend/{$blend}/info"));

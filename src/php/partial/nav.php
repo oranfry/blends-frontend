@@ -4,13 +4,12 @@
         <div>
             <?php if (BACK): ?><a class="sidebar-backlink" href="<?= BACK ?>">Back</a></a><?php endif ?>
             <?php if (defined('BLEND_NAME')): ?>
-                <?php $blends = Config::get()->blends; ?>
-                <?php if (count($blends) > 1): ?>
+                <?php if (count($blend_lookup) > 1): ?>
                     <div class="navset">
                         <div class="inline-modal">
                             <div class="nav-dropdown">
-                                <?php foreach (Config::get()->blends as $blendname): ?>
-                                    <a href="/blend/<?= $blendname ?>" <?= $blendname == BLEND_NAME ? 'class="current"' : ''?> value="<?= $blendname ?>"><?= /* TODO $blend_lookup[$blendname]->label */ $blendname ?></a>
+                                <?php foreach ($blend_lookup as $blend): ?>
+                                    <a href="/blend/<?= $blend->name ?>" <?= $blendname == BLEND_NAME ? 'class="current"' : ''?> value="<?= $blend->name ?>"><?= $blend->label ?></a>
                                 <?php endforeach ?>
                             </div>
                         </div>
