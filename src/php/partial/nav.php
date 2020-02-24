@@ -9,7 +9,7 @@
                         <div class="inline-modal">
                             <div class="nav-dropdown">
                                 <?php foreach ($blend_lookup as $blend): ?>
-                                    <a href="/blend/<?= $blend->name ?>" <?= $blendname == BLEND_NAME ? 'class="current"' : ''?> value="<?= $blend->name ?>"><?= $blend->label ?></a>
+                                    <a href="/blend/<?= $blend->name ?>" <?= $blend->name == BLEND_NAME ? 'class="current"' : ''?> value="<?= $blend->name ?>"><?= $blend->label ?></a>
                                 <?php endforeach ?>
                             </div>
                         </div>
