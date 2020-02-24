@@ -242,7 +242,7 @@ function get_current_filters($fields)
                 $filters[] = (object) [
                     'field' => $field->name,
                     'value' => $csv->value,
-                    'cmp' => ($field->type == 'number' ? '=' : 'like'),
+                    'cmp' => '=',
                 ];
             }
         }
