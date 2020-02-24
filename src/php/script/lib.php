@@ -12,20 +12,12 @@ if (!preg_match('/^[a-z]*$/', @$_GET['context'])) {
 }
 
 define('CONTEXT', @$_GET['context'] ?: 'default');
-
-Db::connect();
-session_start();
-
 define('REFCOL', 'd8b0b0');
 define('MAX_COLUMN_WIDTH', 25);
-
+define('BACK', @$_GET['back'] ? base64_decode($_GET['back']) : null);
 set_highlight(@Config::get()->highlight ?: REFCOL);
 
-define('BACK', @$_GET['back'] ? base64_decode($_GET['back']) : null);
-
-const ESC = "\x1b";
-const GS = "\x1d";
-const NUL = "\x00";
+session_start();
 
 function get_api_client()
 {
