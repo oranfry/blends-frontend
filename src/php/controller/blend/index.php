@@ -5,8 +5,7 @@ use contextvariableset\Filter;
 use contextvariableset\Hidden;
 use contextvariableset\Showas;
 
-$api = get_api_client();
-$blends = $api->blends();
+$blends = Blend::list();
 $blend_lookup = [];
 
 foreach ($blends as $_blend) {
@@ -21,13 +20,13 @@ $types = array_values(
     array_filter(
         $blend->linetypes,
         function ($v) use ($blend) {
-            return !@$blend->hide_types || !in_array($v, get_object_vars($blend->hide_types));
+            return !@$blend->hide_types || !in_array($v, array_keys($blend->hide_types));
         }
     )
 );
 
-$linetypes = array_map(function($v) use ($api){
-    return $api->linetype($v);
+$linetypes = array_map(function($v){
+    return Linetype::info($v);
 }, $blend->linetypes);
 
 foreach ($linetypes as $linetype) {
@@ -115,7 +114,7 @@ foreach ($fields as $field) {
     }
 }
 
-$records = $api->search(BLEND_NAME, $filters);
+$records = Blend::search(BLEND_NAME, $filters);
 
 foreach ($records as $record) {
     foreach ($all_fields as $field) {
@@ -167,7 +166,7 @@ if ($blend->cum_toggle && !@$cum) {
 }
 
 if (count(filter_objects($fields, 'summary', 'is', 'sum'))) {
-    $summaries = $api->summaries(BLEND_NAME, $summary_filters);
+    $summaries = Blend::summaries(BLEND_NAME, $summary_filters);
     $balances = [];
 
     if (@$blend->past) {

@@ -2,11 +2,9 @@
 use contextvariableset\Repeater;
 use contextvariableset\Daterange;
 
-$api = get_api_client();
-
 define('LAYOUT', 'json');
 
-$linetype = $api->linetype(LINETYPE_NAME);
+$linetype = Linetype::info(LINETYPE_NAME);
 $line_template =  json_decode(file_get_contents('php://input'));
 $datefield = null;
 
@@ -40,7 +38,7 @@ foreach ($dates as $date) {
         $line->{$datefield->name} = $date;
     }
 
-    $linetype = $api->save(LINETYPE_NAME, $line);
+    $linetype = Linetype::save(LINETYPE_NAME, $line);
 }
 
 return [

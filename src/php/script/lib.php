@@ -5,8 +5,6 @@ use contextvariableset\Repeater;
 use contextvariableset\Value;
 use contextvariableset\Filter;
 
-$api = null;
-
 if (!preg_match('/^[a-z]*$/', @$_GET['context'])) {
     error_response("Invalid context");
 }
@@ -18,17 +16,6 @@ define('BACK', @$_GET['back'] ? base64_decode($_GET['back']) : null);
 set_highlight(@Config::get()->highlight ?: REFCOL);
 
 session_start();
-
-function get_api_client()
-{
-    global $api;
-
-    if (!$api) {
-        $api = new ApiClient(APIAUTH, APIHOST, defined('APIIP') ? APIIP : '127.0.0.1');
-    }
-
-    return $api;
-}
 
 function get_current_filters($fields)
 {
@@ -145,15 +132,6 @@ function get_repeater_filters($repeater, $datefield_name)
         'field' => $datefield_name,
         'value' => $repeater->render(),
     ]];
-}
-
-function ff($date, $day = 'Mon')
-{
-    while (date('D', strtotime($date)) != $day) {
-        $date = date_shift($date, '1 day');
-    }
-
-    return $date;
 }
 
 function computed_field_value($record, $expression)

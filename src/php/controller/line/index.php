@@ -1,6 +1,5 @@
 <?php
-$api = get_api_client();
-$linetype = $api->linetype(LINETYPE_NAME);
+$linetype = Linetype::info(LINETYPE_NAME);
 $linetype_lookup = [LINETYPE_NAME => $linetype];
 $tablelink_lookup = [];
 
@@ -9,7 +8,7 @@ $parentlink = null;
 $parentid = null;
 
 if (LINE_ID) {
-    $line = $api->get(LINETYPE_NAME, LINE_ID);
+    $line = Linetype::get(LINETYPE_NAME, LINE_ID);
 
     if (!$line) {
         error_response('No such line', 400);
@@ -18,10 +17,10 @@ if (LINE_ID) {
     $child_sets = [];
 
     foreach ($linetype->children as $child) {
-        $childset = $api->children(LINETYPE_NAME, $child->label, LINE_ID);
+        $childset = Linetype::childset(LINETYPE_NAME, $child->label, LINE_ID);
 
         if (!isset($linetype_lookup[$child->linetype])) {
-            $linetype_lookup[$child->linetype] = $api->linetype($child->linetype);
+            $linetype_lookup[$child->linetype] = Linetype::info($child->linetype);
         }
 
         if (!$childset) {
@@ -41,10 +40,10 @@ foreach ($linetype->parenttypes as $parenttype) {
 }
 
 foreach (@$linetype->children ?: [] as $child) {
-    $tablelink_lookup[$child->parent_link] = $api->tablelink($child->parent_link);
+    $tablelink_lookup[$child->parent_link] = Tablelink::info($child->parent_link);
 }
 
-$suggested_values = $api->suggested(LINETYPE_NAME);
+$suggested_values = Linetype::suggested(LINETYPE_NAME);
 
 $hasFileFields = in_array('file', array_map(function ($f) {
     return $f->type;

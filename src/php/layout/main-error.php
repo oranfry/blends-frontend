@@ -11,13 +11,20 @@
     }
 </style>
 <h1><?= $code ?></h1>
+<?php
+if (!defined('SHOW_ERRORS') || SHOW_ERRORS) {
+    return;
+}
+?>
+
 <pre style="font-size: 1.4em"><?php if (is_string($error)) {
     echo $error;
 } else {
     var_export($error);
 } ?></pre>
 
-<?php foreach (debug_backtrace() as $i => $bt) {
+<?php
+foreach (debug_backtrace() as $i => $bt) {
     echo '<div class="backtrace-line">';
 
     if (@$bt['file']) {
