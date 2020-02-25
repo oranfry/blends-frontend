@@ -1,4 +1,4 @@
-<div class="navbar-placeholder" style="height: 2em;">&nbsp;</div>
+<div class="navbar-placeholder" style="height: 2.5em;">&nbsp;</div>
 <div class="instances navbar printhide">
     <form id="instanceform" action="/change-instances" method="post">
         <div>
