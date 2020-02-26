@@ -29,7 +29,7 @@ if (isset($_POST['auth'])) {
             <div class="cols">
                 <div class="col">
                     <h1 class="mobile-only"><?= Config::get()->instance_name ?: 'Blends' ?></h1>
-                    <div style="display: inline-block; background: url(/img/logo.png) center center; width: 200px; height: 200px; background-size: cover"></div>
+                    <div style="display: inline-block; background: url(<?= @Config::get()->logopath ?>) center center; width: 200px; height: 200px; background-size: cover"></div>
                 </div>
                 <div class="col">
                     <form action="" method="post">
