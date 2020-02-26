@@ -1,4 +1,4 @@
 <?php
 define('LAYOUT', 'json');
 
-$result = Line::delete(LINETYPE_NAME, LINE_ID);
+$result = Linetype::delete(LINETYPE_NAME, LINE_ID);

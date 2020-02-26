@@ -38,7 +38,7 @@ foreach ($dates as $date) {
         $line->{$datefield->name} = $date;
     }
 
-    $linetype = Linetype::save(LINETYPE_NAME, $line);
+    $linetype = Linetype::save(LINETYPE_NAME, $line, LINE_ID);
 }
 
 return [
