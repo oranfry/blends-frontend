@@ -17,7 +17,7 @@ if (LINE_ID) {
     $child_sets = [];
 
     foreach ($linetype->children as $child) {
-        $childset = Linetype::childset(LINETYPE_NAME, $child->label, LINE_ID);
+        $childset = Linetype::childset(LINETYPE_NAME, LINE_ID, $child->label);
 
         if (!isset($linetype_lookup[$child->linetype])) {
             $linetype_lookup[$child->linetype] = Linetype::info($child->linetype);

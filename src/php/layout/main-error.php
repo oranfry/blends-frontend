@@ -12,7 +12,7 @@
 </style>
 <h1><?= $code ?></h1>
 <?php
-if (!defined('SHOW_ERRORS') || SHOW_ERRORS) {
+if (!defined('SHOW_ERRORS') || !SHOW_ERRORS) {
     return;
 }
 ?>
