@@ -71,7 +71,8 @@ foreach ($all_fields as $field) {
     }
 
     if ($field->type == 'date') {
-        ContextVariableSet::put('daterange', new Daterange('daterange'));
+        $daterange = new Daterange('daterange');
+        ContextVariableSet::put('daterange', $daterange);
     } else {
         $cvs = new Value(BLEND_NAME . "_{$field->name}");
         $cvs->label = $field->name;
@@ -222,7 +223,7 @@ $datefieldwhichisgroupfield = @filter_objects(@filter_objects($all_fields, 'name
 
 if ($datefieldwhichisgroupfield) {
     $currentgroup = date('Y-m-d');
-    $defaultgroup = date('Y-m-d');
+    $defaultgroup = (date('Y-m-d') >= $daterange->from && date('Y-m-d') <= $daterange->to) ? date('Y-m-d') : $daterange->from;
 }
 
 $prepop = [];
