@@ -31,11 +31,20 @@ if (LINE_ID) {
     }
 }
 
-foreach ($linetype->parenttypes as $parenttype) {
-    if (@$_GET[$parenttype]) {
-        $parenttype = $parenttype;
-        $parentid = $_GET[$parenttype];
-        break;
+foreach ($linetype->parenttypes as $_parenttype) {
+    if (!@$_GET[$_parenttype]) {
+        continue;
+    }
+
+    $pt = Linetype::load($_parenttype);
+
+    foreach (@$pt->children ?: [] as $c) {
+        if ($c->parent_link == @$_GET['parentlink']) {
+            $parenttype = $pt->name;
+            $parentlink = $c->parent_link;
+            $parentid = (int) $_GET[$parenttype];
+            break 2;
+        }
     }
 }
 
