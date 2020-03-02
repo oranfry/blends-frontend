@@ -6,11 +6,6 @@
         <meta charset="utf-8"/>
         <title><?= Config::get()->instance_name ?: 'Blends' ?></title>
         <style>
-            .easy-table tr[data-id]:hover td,
-            .nav-dropdown a:hover {
-                background-color: #<?= adjustBrightness(HIGHLIGHT, 20) ?>;
-            }
-
             .appcolor-bg,
             .button.button--main,
             nav a.current,
@@ -51,6 +46,6 @@
         ?></script>
     <?php @include APP_HOME . '/src/php/partial/js/' . PAGE . '.php'; ?>
     <script type="text/javascript" src="/js/app.<?= latest('js') ?>.js"></script>
-    <i class="icon icon--tick" style="position: fixed; top: 0.5em; right: 0.5em; z-index: 99999999999"></i>
+    <!--<i class="icon icon- -tick" style="position: fixed; top: 0.5em; right: 0.5em; z-index: 99999999999"></i>-->
 </body>
 </html>
