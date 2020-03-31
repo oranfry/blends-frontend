@@ -88,7 +88,6 @@ foreach ($all_fields as $field) {
 apply_filters();
 
 $filters = get_current_filters($all_fields);
-$summary_filters = get_past_filters($all_fields);
 
 if (is_string(@$blend->cum)) {
     $cum = false;
@@ -167,10 +166,13 @@ if ($blend->cum_toggle && !@$cum) {
 }
 
 if (count(filter_objects($fields, 'summary', 'is', 'sum'))) {
-    $summaries = Blend::summaries(BLEND_NAME, $summary_filters);
     $balances = [];
+    $summaries = [];
 
-    if (@$blend->past) {
+    if ($blend->past) {
+        $summary_filters = get_past_filters($all_fields);
+        $summaries = Blend::summaries(BLEND_NAME, $summary_filters);
+
         foreach ($all_fields as $field) {
             if (@$field->summary != 'sum') {
                 continue;
