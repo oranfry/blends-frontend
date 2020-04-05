@@ -109,18 +109,53 @@ function get_past_filters($fields)
 function get_adhoc_filters()
 {
     $filters = [];
+    $byfield = [];
     $adhocfilters = ContextVariableSet::get("adhocfilters");
 
     if ($adhocfilters->value) {
         foreach (explode(',', $adhocfilters->value) as $filterid) {
             $filter = ContextVariableSet::get($filterid);
-            // var_die($filterid);
+            $field = $filter->field;
 
+            if (!@$byfield[$field]) {
+                $byfield[$field] = [];
+            }
+
+            $byfield[$field][] = $filter;
+        }
+    }
+
+    foreach ($byfield as $field => $_filters) {
+        $bycmp = [];
+
+        foreach ($_filters as $filter) {
+            $cmp = $filter->cmp;
+
+            if (!@$bycmp[$cmp]) {
+                $bycmp[$cmp] = [];
+            }
+
+            $bycmp[$cmp][] = $filter;
+        }
+
+        if (count(@$bycmp['='] ?: []) > 1) {
             $filters[] = (object) [
-                'field' => $filter->field,
-                'value' => $filter->value,
-                'cmp' => $filter->cmp,
+                'field' => $field,
+                'value' => array_map(function($e){ return $e->value; }, $bycmp['=']),
+                'cmp' => '=',
             ];
+
+            unset($bycmp['=']);
+        }
+
+        foreach ($bycmp as $cmp => $_filters) {
+            foreach ($_filters as $filter) {
+                $filters[] = (object) [
+                    'field' => $filter->field,
+                    'value' => $filter->value,
+                    'cmp' => $filter->cmp,
+                ];
+            }
         }
     }
 
