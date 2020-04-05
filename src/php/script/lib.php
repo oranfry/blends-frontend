@@ -80,11 +80,13 @@ function get_past_filters($fields)
         if ($field->type == 'date') {
             $datefield = $field;
 
-            $filters[] = (object)[
-                'field' => 'date',
-                'value' => $daterange->from,
-                'cmp' => '<',
-            ];
+            if ($daterange->from) {
+                $filters[] = (object)[
+                    'field' => 'date',
+                    'value' => $daterange->from,
+                    'cmp' => '<',
+                ];
+            }
         } else {
             $csv = new Value(BLEND_NAME . "_{$field->name}");
             if ($csv->value) {
