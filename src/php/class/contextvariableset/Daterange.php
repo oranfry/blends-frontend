@@ -76,6 +76,9 @@ class Daterange extends \ContextVariableSet
                         <?php if (!@$current_period->suppress_custom): ?>
                             <a class="open-custom-daterange <?= $this->rawto ? 'current' : '' ?>">Custom</a>
                         <?php endif ?>
+                        <div class="standard-daterange" style="<?= $this->rawto ? 'display: none' : '' ?>; margin-bottom: 0.5em">
+                            <input class="cv-surrogate cv-manip" data-for="<?= $this->prefix ?>__rawrawfrom" type="text" value="<?= $this->from ?>" data-manips="<?= $this->prefix ?>__rawto=" style="width: 6em"><br>
+                        </div>
                         <div class="custom-daterange" style="<?= $this->rawto ? '' : 'display: none' ?>">
                             <input class="cv-surrogate cv-manip no-autosubmit" data-for="<?= $this->prefix ?>__rawrawfrom" type="text" value="<?= $this->from ?>" data-manips="<?= $this->prefix ?>__rawto=<?= $this->to ?>" style="width: 6em"><br>
                             to<br>

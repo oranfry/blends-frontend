@@ -159,7 +159,7 @@
 
     $('.open-custom-daterange:not(.current)').on('click', function(e){
         e.preventDefault();
-        $('.custom-daterange').toggle();
+        $('.custom-daterange, .standard-daterange').toggle();
     });
 
     $('.bulk-edit-form input[name="action"]').on('click', function(e){
