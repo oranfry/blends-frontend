@@ -92,7 +92,7 @@ abstract class ContextVariableSet
 
     public function constructQuery($changes)
     {
-        $data = static::getValues()
+        $data = static::getValues();
 
         foreach ($changes as $name => $value) {
             $data[$this->prefix . '__' . $name] = $value;
