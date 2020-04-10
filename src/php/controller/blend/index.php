@@ -171,7 +171,10 @@ if (count(filter_objects($fields, 'summary', 'is', 'sum'))) {
 
     if ($blend->past) {
         $summary_filters = get_past_filters($all_fields);
-        $summaries = Blend::summaries(BLEND_NAME, $summary_filters);
+        $past_summaries = Blend::summaries(BLEND_NAME, $summary_filters);
+        $summaries = [
+            'initial' => $past_summaries['initial'],
+        ];
 
         foreach ($all_fields as $field) {
             if (@$field->summary != 'sum') {
