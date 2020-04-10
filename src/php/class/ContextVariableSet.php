@@ -42,7 +42,17 @@ abstract class ContextVariableSet
             }
         }
 
-        return @$_SESSION['contextvariables'][CONTEXT][$this->prefix] ?: [];
+        $data = [];
+
+        $prefix_du = $this->prefix . '__';
+        foreach ($_GET as $qname => $qvalue) {
+            if (strpos($qname, $prefix_du) === 0) {
+                $name = substr($qname, strlen($prefix_du));
+                $data[$name] = $qvalue;
+            }
+        }
+
+        return $data;
     }
 
     public static function get($name)

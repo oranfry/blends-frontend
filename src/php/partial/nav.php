@@ -5,11 +5,15 @@
             <?php if (BACK): ?><a class="sidebar-backlink" href="<?= BACK ?>">Back</a></a><?php endif ?>
             <?php if (defined('BLEND_NAME')): ?>
                 <?php if (count($blend_lookup) > 1): ?>
+                    <?php
+                        $query = implode('&', array_map(function($v, $k) { return "{$k}={$v}"; }, $_GET, array_keys($_GET)));
+                        $query = $query ? '?' . $query : '';
+                    ?>
                     <div class="navset">
                         <div class="inline-modal">
                             <div class="nav-dropdown">
                                 <?php foreach ($blend_lookup as $blend): ?>
-                                    <a href="/blend/<?= $blend->name ?>" <?= $blend->name == BLEND_NAME ? 'class="current"' : ''?> value="<?= $blend->name ?>"><?= $blend->label ?></a>
+                                    <a href="/blend/<?= $blend->name ?><?= $query ?>" <?= $blend->name == BLEND_NAME ? 'class="current"' : ''?>><?= $blend->label ?></a>
                                 <?php endforeach ?>
                             </div>
                         </div>
