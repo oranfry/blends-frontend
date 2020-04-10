@@ -169,6 +169,7 @@
         var form = $editForm[0];
         var data = {};
         var blend = $editForm.data('blend');
+        var queryParams = getQueryParams();
 
         $("input[name^='apply_']:checked").each(function() {
             var rel_field = $(this).attr('name').replace(/^apply_/, '');
@@ -181,8 +182,11 @@
             return;
         }
 
+        delete queryParams._returnurl;
+        delete queryParams.back;
+
         var handleSave = function() {
-            $.ajax('/api/blend/' + BLEND_NAME + '/update', {
+            $.ajax('/api/blend/' + BLEND_NAME + '/update?' + $.param(queryParams), {
                 method: 'post',
                 contentType: false,
                 processData: false,
@@ -241,13 +245,17 @@
         var data = {};
         var linetype = $addForm.data('linetype');
         var blend = $addForm.data('blend');
+        var queryParams = getQueryParams();
 
         $addForm.find("[name]").each(function() {
             data[$(this).attr('name')] = $(this).val();
         });
 
+        delete queryParams._returnurl;
+        delete queryParams.back;
+
         var handleSave = function() {
-            $.ajax('/api/' + blend + '/' + linetype + '/add', {
+            $.ajax('/api/' + blend + '/' + linetype + '/add?' + $.param(queryParams), {
                 method: 'post',
                 contentType: false,
                 processData: false,
@@ -320,7 +328,12 @@
             return;
         }
 
-        $.ajax('/api/blend/' + BLEND_NAME + '/delete', {
+        var queryParams = getQueryParams();
+
+        delete queryParams._returnurl;
+        delete queryParams.back;
+
+        $.ajax('/api/blend/' + BLEND_NAME + '/delete?' + $.param(queryParams), {
             method: 'post',
             data: {},
             success: function(data) {
@@ -340,7 +353,12 @@
             return;
         }
 
-        $.ajax('/api/blend/' + BLEND_NAME + '/print', {
+        var queryParams = getQueryParams();
+
+        delete queryParams._returnurl;
+        delete queryParams.back;
+
+        $.ajax('/api/blend/' + BLEND_NAME + '/print?' + $.param(queryParams), {
             method: 'post',
             data: {},
             error: function(data){
@@ -617,9 +635,8 @@
         return result;
     }
 
-    function changeInstance()
+    function getQueryParams()
     {
-        var base = location.href.split('?')[0];
         var existingData = getJsonFromUrl(location.href);
         var instanceData = Object.fromEntries(new FormData($instanceform[0]));
         var data = $.extend(existingData, instanceData);
@@ -632,6 +649,14 @@
                 }
             }
         }
+
+        return data;
+    }
+
+    function changeInstance()
+    {
+        var base = location.href.split('?')[0];
+        var data = getQueryParams();
 
         delete data._returnurl;
 
