@@ -1,8 +1,9 @@
 <?php
 namespace contextvariableset;
 
-use \Config;
-use \Period;
+use Config;
+use Period;
+use ContextVariableSet;
 
 class Daterange extends \ContextVariableSet
 {
@@ -71,7 +72,7 @@ class Daterange extends \ContextVariableSet
                     <div class="nav-dropdown">
                          <?php foreach (Config::get()->periods as $period): ?>
                             <?php $current = (!$this->rawto && $period == $this->period); ?>
-                            <a class="cv-manip <?= $current ? 'current' : '' ?>" data-manips="<?= $this->prefix ?>__period=<?= $period ?>&<?= $this->prefix ?>__rawto="><?= Period::load($period)->navlabel ?></a>
+                            <a class="<?= $current ? 'current' : '' ?>" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['period' => $period, 'rawto' => null]); ?>"><?= Period::load($period)->navlabel ?></a>
                         <?php endforeach ?>
                         <?php if (!@$current_period->suppress_custom): ?>
                             <a class="open-custom-daterange <?= $this->rawto ? 'current' : '' ?>">Custom</a>
@@ -89,9 +90,9 @@ class Daterange extends \ContextVariableSet
                 </div>
                 <a class="inline-modal-trigger"><?= strtoupper($this->rawto ? 'c' : $current_period->id) ?></a>
                 <?php if (!@$current_period->suppress_nav): ?>
-                    <div class="drnav <?= $highlight[0] ?>"><a class="icon icon--arrowleft cv-manip" data-manips="<?= $this->prefix ?>__rawrawfrom=<?= $prevfrom ?>"></a></div>
-                    <div class="drnav <?= $highlight[1] ?>"><a class="icon icon--dot cv-manip" data-manips="<?= $this->prefix ?>__rawrawfrom=<?= $currfrom ?>"></a></div>
-                    <div class="drnav <?= $highlight[2] ?>"><a class="icon icon--arrowright cv-manip" data-manips="<?= $this->prefix ?>__rawrawfrom=<?= $nextfrom ?>"></a></div>
+                    <div class="drnav <?= $highlight[0] ?>"><a class="icon icon--arrowleft" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['rawrawfrom'=> $prevfrom]); ?>"></a></div>
+                    <div class="drnav <?= $highlight[1] ?>"><a class="icon icon--dot" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['rawrawfrom'=> $currfrom]); ?>"></a></div>
+                    <div class="drnav <?= $highlight[2] ?>"><a class="icon icon--arrowright" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['rawrawfrom'=> $nextfrom]); ?>"></a></div>
                 <?php endif ?>
                 <input class="cv" type="hidden" name="<?= $this->prefix ?>__period" value="<?= $this->period ?>">
                 <input class="cv" type="hidden" name="<?= $this->prefix ?>__rawrawfrom" value="<?= $this->rawrawfrom ?>">

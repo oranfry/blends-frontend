@@ -29,7 +29,7 @@ class Showas extends \ContextVariableSet
         <div class="navset">
             <div class="inline-modal">
                 <div class="nav-dropdown">
-                    <?php foreach ($this->options as $showas): ?><a class="cv-manip <?= $showas == $this->value ? 'current' : '' ?>" data-manips="<?= $this->prefix ?>__value=<?= $showas ?>"><i class="icon icon--<?= static::$icons[$showas] ?>" alt="<?= $showas ?>"></i></a><?php endforeach ?>
+                    <?php foreach ($this->options as $showas): ?><a class="<?= $showas == $this->value ? 'current' : '' ?>" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['value' => $showas]); ?>"><i class="icon icon--<?= static::$icons[$showas] ?>" alt="<?= $showas ?>"></i></a><?php endforeach ?>
                 </div>
             </div>
             <i class="inline-modal-trigger current icon icon--<?= static::$icons[$this->value] ?>" alt="<?= $this->value ?>"></i>

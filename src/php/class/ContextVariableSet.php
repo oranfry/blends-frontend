@@ -65,6 +65,19 @@ abstract class ContextVariableSet
         return @static::$library;
     }
 
+    public static function getValues()
+    {
+        $data = [];
+
+        foreach (static::getAll() as $cvs) {
+            foreach ($cvs->getRawData() as $name => $value) {
+                $data[$cvs->prefix . '__' . $name] = $value;
+            }
+        }
+
+        return $data;
+    }
+
     public static function put($name, $object)
     {
         static::$library[$name] = $object;
@@ -75,5 +88,16 @@ abstract class ContextVariableSet
         $function = implode('_', ['var', 'dump']);
 
         $function(static::$library);
+    }
+
+    public function constructQuery($changes)
+    {
+        $data = static::getValues();
+
+        foreach ($changes as $name => $value) {
+            $data[$this->prefix . '__' . $name] = $value;
+        }
+
+        return implode('&', array_map(function($v, $k){  return "{$k}={$v}"; }, array_values($data), array_keys($data)));
     }
 }
