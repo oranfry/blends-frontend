@@ -622,9 +622,19 @@
         var base = location.href.split('?')[0];
         var existingData = getJsonFromUrl(location.href);
         var instanceData = Object.fromEntries(new FormData($instanceform[0]));
-
         var data = $.extend(existingData, instanceData);
+
+        // remove nullish
+        for (var prop in data) {
+            if (Object.prototype.hasOwnProperty.call(data, prop)) {
+                if (!data[prop]) {
+                    delete data[prop];
+                }
+            }
+        }
+
         delete data._returnurl;
+
         var query = $.param(data);
         var link = base + (query && '?' || '') + query;
 

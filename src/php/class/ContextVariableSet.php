@@ -92,12 +92,14 @@ abstract class ContextVariableSet
 
     public function constructQuery($changes)
     {
-        $data = static::getValues();
+        $data = static::getValues()
 
         foreach ($changes as $name => $value) {
             $data[$this->prefix . '__' . $name] = $value;
         }
 
-        return implode('&', array_map(function($v, $k){  return "{$k}={$v}"; }, array_values($data), array_keys($data)));
+        $data = array_filter($data, function($e){ return (bool) $e; });
+
+        return implode('&', array_map(function($v, $k){ return "{$k}={$v}"; }, array_values($data), array_keys($data)));
     }
 }
