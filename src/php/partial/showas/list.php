@@ -126,7 +126,7 @@ $seen_today = !@$currentgroup || !$daterange || strcmp($currentgroup, $from) < 0
                         ?></td>
                     <?php endforeach ?>
                     <td class="printhide" style="text-align: right; vertical-align: middle">
-                        <i class="trigger-edit-line icon icon--edit"></i>
+                        <a href="<?= editlink($record->id, $record->type) ?>"><i class="icon icon--edit"></i></a>
                         <?php if (@$parentId): ?>
                             <i class="trigger-unlink-line icon icon--unlink"></i>
                         <?php endif ?>

@@ -321,6 +321,13 @@ function addlink($type, $group, $groupfield, $defaultgroup, $parent_query, $prep
     return $url;
 }
 
+function editlink($id, $type)
+{
+    $back = base64_encode($_SERVER['REQUEST_URI']);
+
+    return "/{$type}/{$id}?back={$back}";
+}
+
 function get_repeater_dates($repeater, $from, $to)
 {
     $period = $repeater->period;

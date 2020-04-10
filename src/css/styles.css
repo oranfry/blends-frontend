@@ -121,7 +121,7 @@ nav:empty {
     line-height: 0.8em;
 }
 
-td > .icon {
+td > .icon, td > a > .icon {
     position: relative;
     top: 0.2em;
 }
