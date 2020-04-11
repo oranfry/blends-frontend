@@ -78,7 +78,7 @@ $seen_today = !@$currentgroup || !$daterange || strcmp($currentgroup, $from) < 0
                         <?php
                             $grouptitle = $record->{$groupfield};
                             if ($daterange) {
-                                $grouphref = strtok($_SERVER['REQUEST_URI'], '?') . '?' . $daterange->constructQuery(['period' => 'day', 'rawrawfrom' => $record->{$groupfield}]);
+                                $grouphref = strtok($_SERVER['REQUEST_URI'], '?') . '?' . $daterange->constructQuery(['period' => 'day', 'rawrawfrom' => $record->{$groupfield}]) . '&back=' . base64_encode($_SERVER['REQUEST_URI']);
                                 $grouptitle = "<a class=\"incog\" href=\"{$grouphref}\">" . $grouptitle . "</a>";
                             }
                         ?>
