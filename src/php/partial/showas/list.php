@@ -75,8 +75,9 @@ $seen_today = !@$currentgroup || !$daterange || strcmp($currentgroup, $from) < 0
                     <?php endif ?>
 
                     <tr class="<?= strcmp($record->{$groupfield}, @$currentgroup) ? '' : 'today' ?>">
-                        <td class="sacrifice" colspan="<?= $num_cols - 1 ?>" style="line-height: 2em; font-weight: bold"><?= $record->{$groupfield} ?></td>
-                        <td class="nsacrifice first-child" colspan="<?= $num_nonsacrifice_cols - 1 ?>" style="line-height: 2em; font-weight: bold"><?= $record->{$groupfield} ?></td>
+                        <?php $grouplink = strtok($_SERVER['REQUEST_URI'], '?') . '?' . $daterange->constructQuery(['period' => 'day', 'rawrawfrom' => $record->{$groupfield}]); ?>
+                        <td class="sacrifice" colspan="<?= $num_cols - 1 ?>" style="line-height: 2em; font-weight: bold"><a class="incog" href="<?= $grouplink ?>"><?= $record->{$groupfield} ?></a></td>
+                        <td class="nsacrifice first-child" colspan="<?= $num_nonsacrifice_cols - 1 ?>" style="line-height: 2em; font-weight: bold"><a href="<?= $grouplink ?>"><?= $record->{$groupfield} ?></a></td>
                         <td class="printhide" style="text-align: right; color: black; position: relative; vertical-align: middle">
                             <?php if (!@$hideadd && count(@$types ?: []) > 0): ?>
                                 <?php if (count($types) > 1): ?>
