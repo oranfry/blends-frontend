@@ -169,7 +169,7 @@ if (count(filter_objects($fields, 'summary', 'is', 'sum'))) {
     $balances = [];
     $summaries = [];
 
-    if ($blend->past) {
+    if ($blend->past && @$daterange && $daterange->from) {
         $summary_filters = get_past_filters($all_fields);
         $past_summaries = Blend::summaries(BLEND_NAME, $summary_filters);
         $summaries = [
