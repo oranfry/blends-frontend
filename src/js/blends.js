@@ -163,13 +163,14 @@
     });
 
     $('.bulk-edit-form input[name="action"]').on('click', function(e){
-        var $editForm = $(this).closest('form');
         e.preventDefault();
 
+        var $editForm = $(this).closest('form');
         var form = $editForm[0];
         var data = {};
         var blend = $editForm.data('blend');
-        var queryParams = getQueryParams();
+        var $selected = $('tr[data-id].selected');
+        var query;
 
         $("input[name^='apply_']:checked").each(function() {
             var rel_field = $(this).attr('name').replace(/^apply_/, '');
@@ -182,11 +183,14 @@
             return;
         }
 
-        delete queryParams._returnurl;
-        delete queryParams.back;
+        if ($selected.length) {
+            query = getSelectionQuery($selected);
+        } else {
+            query = getFiltersQuery();
+        }
 
         var handleSave = function() {
-            $.ajax('/api/blend/' + BLEND_NAME + '/update?' + $.param(queryParams), {
+            $.ajax('/api/blend/' + BLEND_NAME + '/update?' + query, {
                 method: 'post',
                 contentType: false,
                 processData: false,
@@ -245,17 +249,13 @@
         var data = {};
         var linetype = $addForm.data('linetype');
         var blend = $addForm.data('blend');
-        var queryParams = getQueryParams();
 
         $addForm.find("[name]").each(function() {
             data[$(this).attr('name')] = $(this).val();
         });
 
-        delete queryParams._returnurl;
-        delete queryParams.back;
-
         var handleSave = function() {
-            $.ajax('/api/' + blend + '/' + linetype + '/add?' + $.param(queryParams), {
+            $.ajax('/api/' + blend + '/' + linetype + '/add?' + getFiltersQuery(), {
                 method: 'post',
                 contentType: false,
                 processData: false,
@@ -328,12 +328,16 @@
             return;
         }
 
-        var queryParams = getQueryParams();
+        var $selected = $('tr[data-id].selected');
+        var query;
 
-        delete queryParams._returnurl;
-        delete queryParams.back;
+        if ($selected.length) {
+            query = getSelectionQuery($selected);
+        } else {
+            query = getFiltersQuery();
+        }
 
-        $.ajax('/api/blend/' + BLEND_NAME + '/delete?' + $.param(queryParams), {
+        $.ajax('/api/blend/' + BLEND_NAME + '/delete?' + query, {
             method: 'post',
             data: {},
             success: function(data) {
@@ -346,19 +350,24 @@
         });
     });
 
-    $('.trigger-bulk-print-lines').on('click', function(event){
+    $('.trigger-bulk-print-lines').on('click', function(event)
+    {
         event.preventDefault();
+
+        var $selected = $('tr[data-id].selected');
+        var query;
 
         if (!confirm('bulk print?')) {
             return;
         }
 
-        var queryParams = getQueryParams();
+        if ($selected.length) {
+            query = getSelectionQuery($selected);
+        } else {
+            query = getFiltersQuery();
+        }
 
-        delete queryParams._returnurl;
-        delete queryParams.back;
-
-        $.ajax('/api/blend/' + BLEND_NAME + '/print?' + $.param(queryParams), {
+        $.ajax('/api/blend/' + BLEND_NAME + '/print?' + query, {
             method: 'post',
             data: {},
             error: function(data){
@@ -585,6 +594,27 @@
     $('.repeater-select').on('change', repeaterChanged);
     repeaterChanged();
 
+    $('.easy-table tr').on('click', function(e){
+        var $table = $(this).closest('table');
+        var $tbody = $(this).closest('tbody');
+        var $block;
+
+        if ($(this).data('id')) {
+            $(this).toggleClass('selected');
+            return;
+        }
+
+        if ($tbody.length) {
+            $block = $tbody;
+        } else {
+            $block = $table;
+        }
+
+        var $trs = $block.find('tr[data-id]');
+        var selected = $trs.filter('.selected').length > 0;
+        $trs.toggleClass('selected', !selected);
+    });
+
     function getJsonFromUrl(url)
     {
         var question = url.indexOf("?");
@@ -651,6 +681,25 @@
         }
 
         return data;
+    }
+
+    function getFiltersQuery()
+    {
+        var queryParams = getQueryParams();
+
+        delete queryParams._returnurl;
+        delete queryParams.back;
+
+        return $.param(queryParams);
+    }
+
+    function getSelectionQuery($selected)
+    {
+        var deepids = $selected.map(function(){
+            return $(this).data('type') + ':' + $(this).data('id');
+        }).get();
+
+        return 'selection=' + deepids.join(',');
     }
 
     function changeInstance()
