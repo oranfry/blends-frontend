@@ -660,10 +660,6 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 0;
 }
 
-tr.selected.ghost td {
-    color: #888;
-}
-
 .sidebar-backlink, .navbar-backlink {
     text-decoration: none;
     color: #333;
