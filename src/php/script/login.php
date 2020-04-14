@@ -4,7 +4,7 @@ if (@$_POST['auth'] == Config::get()->password) {
 }
 
 if (@$_SESSION["AUTH"] == Config::get()->password) {
-    $package_alias = array_keys(Config::get()->packages)[0];
+    $package_alias = array_keys(Package::rgetAll())[0];
     $package = Package::rget($package_alias);
     header("Location: {$package_alias}/blend/{$package->blends[0]}");
     die('Redirecting...');
