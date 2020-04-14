@@ -90,13 +90,13 @@ $seen_today = !@$currentgroup || !$daterange || strcmp($currentgroup, $from) < 0
                                     <div class="inline-modal inline-modal--right">
                                         <nav>
                                             <?php foreach ($types as $_type): ?>
-                                                <a href="<?= addlink($_type, @$record->{$groupfield}, @$groupfield, @$defaultgroup, @$parent_query, $prepop) ?>"><i class="icon icon--mono icon--<?= $linetype_lookup[$_type]->icon ?>"></i></a>
+                                                <a href="<?= addlink(PACKAGE_NAME, $_type, @$record->{$groupfield}, @$groupfield, @$defaultgroup, @$parent_query, $prepop) ?>"><i class="icon icon--mono icon--<?= $linetype_lookup[$_type]->icon ?>"></i></a>
                                             <?php endforeach ?>
                                         </nav>
                                     </div>
                                     <a class="inline-modal-trigger"><i class="icon icon--mono icon--plus"></i></a>
                                 <?php else: ?>
-                                    <a href="<?= addlink($types[0], @$record->{$groupfield}, @$groupfield, @$defaultgroup, @$parent_query, @$prepop) ?>"><i class="icon icon--mono icon--plus"></i></a>
+                                    <a href="<?= addlink(PACKAGE_NAME, $types[0], @$record->{$groupfield}, @$groupfield, @$defaultgroup, @$parent_query, @$prepop) ?>"><i class="icon icon--mono icon--plus"></i></a>
                                 <?php endif ?>
                             <?php endif ?>
                         </td>
@@ -133,7 +133,7 @@ $seen_today = !@$currentgroup || !$daterange || strcmp($currentgroup, $from) < 0
                         ?></td>
                     <?php endforeach ?>
                     <td class="printhide" style="text-align: right; vertical-align: middle">
-                        <a href="<?= editlink($record->id, $record->type) ?>"><i class="icon icon--edit"></i></a>
+                        <a href="<?= editlink($record->id, $record->type, PACKAGE_NAME) ?>"><i class="icon icon--edit"></i></a>
                         <?php if (@$parentId): ?>
                             <i class="trigger-unlink-line icon icon--unlink"></i>
                         <?php endif ?>
@@ -154,6 +154,6 @@ $seen_today = !@$currentgroup || !$daterange || strcmp($currentgroup, $from) < 0
 
 <nav>
     <?php foreach ($types as $_type): ?>
-        <a href="<?= addlink($_type, @$defaultgroup, @$groupfield, @$defaultgroup, @$parent_query, @$prepop) ?>"><i class="icon icon--mono icon--plus"></i> <i class="icon icon--mono icon--<?= $linetype_lookup[$_type]->icon ?>"></i></a>
+        <a href="<?= addlink(PACKAGE_NAME, $_type, @$defaultgroup, @$groupfield, @$defaultgroup, @$parent_query, @$prepop) ?>"><i class="icon icon--mono icon--plus"></i> <i class="icon icon--mono icon--<?= $linetype_lookup[$_type]->icon ?>"></i></a>
     <?php endforeach ?>
 </nav>

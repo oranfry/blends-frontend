@@ -14,18 +14,19 @@
                     <div class="navset">
                         <div class="inline-modal">
                             <div class="nav-dropdown">
-                                <?php foreach ($packages as $package_params): ?>
-                                    <?php $package = Package::load($package_params->name); ?>
+                                <?php foreach ($packages as $alias => $package_params): ?>
+                                    <?php $package = Package::rget($alias); ?>
                                     <?php $blend = $blend_lookup[$package->blends[0]]; ?>
                                     <?php
                                         $iscurrentpackage = false;
 
                                         if (in_array(BLEND_NAME, $package->blends)) {
+                                            $current_package_alias = $alias;
                                             $current_package = $package;
                                             $iscurrentpackage = true;
                                         }
                                     ?>
-                                    <a href="/blend/<?= $blend->name ?><?= $query ?>" <?= $iscurrentpackage ? 'class="current"' : ''?>><?= @$package->label ?? $package_params->name ?></a>
+                                    <a href="/<?= $alias ?>/blend/<?= $blend->name ?><?= $query ?>" <?= $iscurrentpackage ? 'class="current"' : ''?>><?= @$package->label ?? $package_params->name ?></a>
                                 <?php endforeach ?>
                             </div>
                         </div>
@@ -38,7 +39,7 @@
                                 <div class="nav-dropdown">
                                     <?php foreach ($current_package->blends as $blend_name): ?>
                                         <?php $blend = $blend_lookup[$blend_name]; ?>
-                                        <a href="/blend/<?= $blend->name ?><?= $query ?>" <?= $blend->name == BLEND_NAME ? 'class="current"' : ''?>><?= @$blend->label ?? $blend_name ?></a>
+                                        <a href="/<?= $current_package_alias ?>/blend/<?= $blend->name ?><?= $query ?>" <?= $blend->name == BLEND_NAME ? 'class="current"' : ''?>><?= @$blend->label ?? $blend_name ?></a>
                                     <?php endforeach ?>
                                 </div>
                             </div>

@@ -190,7 +190,7 @@
         }
 
         var handleSave = function() {
-            $.ajax('/api/blend/' + BLEND_NAME + '/update?' + query, {
+            $.ajax('/api/' + PACKAGE_NAME + 'blend/' + BLEND_NAME + '/update?' + query, {
                 method: 'post',
                 contentType: false,
                 processData: false,
@@ -255,7 +255,7 @@
         });
 
         var handleSave = function() {
-            $.ajax('/api/' + blend + '/' + linetype + '/add?' + getFiltersQuery(), {
+            $.ajax('/api/' + PACKAGE_NAME + '/' + blend + '/' + linetype + '/add?' + getFiltersQuery(), {
                 method: 'post',
                 contentType: false,
                 processData: false,
@@ -337,7 +337,7 @@
             query = getFiltersQuery();
         }
 
-        $.ajax('/api/blend/' + BLEND_NAME + '/delete?' + query, {
+        $.ajax('/api/' + PACKAGE_NAME + '/blend/' + BLEND_NAME + '/delete?' + query, {
             method: 'post',
             data: {},
             success: function(data) {
@@ -367,7 +367,7 @@
             query = getFiltersQuery();
         }
 
-        $.ajax('/api/blend/' + BLEND_NAME + '/print?' + query, {
+        $.ajax('/api/' + PACKAGE_NAME + '/blend/' + BLEND_NAME + '/print?' + query, {
             method: 'post',
             data: {},
             error: function(data){
@@ -474,7 +474,7 @@
     });
 
     $('.print-line').on('click', function(){
-        $.ajax('/' + LINETYPE_NAME + '/' + LINE_ID + '/print', {
+        $.ajax('/' + PACKAGE_NAME + '/' + LINETYPE_NAME + '/' + LINE_ID + '/print', {
             method: 'post',
             success: function(data) { $('#output').html(data.messages.join(', ')); }
         });
@@ -498,7 +498,7 @@
             query = '?&parenttype=' + parentType + '&parentid=' + parentId;
         }
 
-        $.ajax('/api/' + type + '/' + id + '/' + action + query, {
+        $.ajax('/api/' + PACKAGE_NAME + '/' + type + '/' + id + '/' + action + query, {
             method: 'post',
             data: {},
             success: function() {
@@ -517,7 +517,7 @@
         var formData = new FormData($form[0]);
         var buttonClicked = $(this).val();
 
-        var url = '/' + LINETYPE_NAME;
+        var url = '/' + PACKAGE_NAME + '/' + LINETYPE_NAME;
 
         if (LINE_ID) {
             url += '/' + LINE_ID;

@@ -304,9 +304,9 @@ function apply_filters()
     ContextVariableSet::put('repeater', $repeater);
 }
 
-function addlink($type, $group, $groupfield, $defaultgroup, $parent_query, $prepop = [])
+function addlink($package, $type, $group, $groupfield, $defaultgroup, $parent_query, $prepop = [])
 {
-    $url = "/{$type}";
+    $url = "/{$package}/{$type}";
 
     $query = $prepop;
 
@@ -321,11 +321,11 @@ function addlink($type, $group, $groupfield, $defaultgroup, $parent_query, $prep
     return $url;
 }
 
-function editlink($id, $type)
+function editlink($id, $type, $package)
 {
     $back = base64_encode($_SERVER['REQUEST_URI']);
 
-    return "/{$type}/{$id}?back={$back}";
+    return "/{$package}/{$type}/{$id}?back={$back}";
 }
 
 function get_repeater_dates($repeater, $from, $to)
