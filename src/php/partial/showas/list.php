@@ -69,7 +69,7 @@ $seen_today = !@$currentgroup || !$daterange || strcmp($currentgroup, $from) < 0
                 ?>
 
                 <?php if (@$record->{$groupfield}): ?>
-                    <?php if ($i): ?>
+                    <?php if ($i > 0): ?>
                         </tbody>
                         <tbody>
                     <?php endif ?>
