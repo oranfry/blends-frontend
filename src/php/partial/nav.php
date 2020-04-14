@@ -4,7 +4,7 @@
         <div>
             <?php if (BACK): ?><a class="sidebar-backlink" href="<?= BACK ?>">Back</a></a><?php endif ?>
             <?php if (defined('BLEND_NAME')): ?>
-                <?php $packages = Config::get()->packages; ?>
+                <?php $packages = Package::rgetAll(); ?>
                 <?php $current_package = null; ?>
                 <?php if (count($packages) > 1): ?>
                     <?php
@@ -14,8 +14,7 @@
                     <div class="navset">
                         <div class="inline-modal">
                             <div class="nav-dropdown">
-                                <?php foreach ($packages as $alias => $package_params): ?>
-                                    <?php $package = Package::rget($alias); ?>
+                                <?php foreach ($packages as $alias => $package): ?>
                                     <?php $blend = $blend_lookup[$package->blends[0]]; ?>
                                     <?php
                                         $iscurrentpackage = false;
@@ -26,7 +25,7 @@
                                             $iscurrentpackage = true;
                                         }
                                     ?>
-                                    <a href="/<?= $alias ?>/blend/<?= $blend->name ?><?= $query ?>" <?= $iscurrentpackage ? 'class="current"' : ''?>><?= @$package->label ?? $package_params->name ?></a>
+                                    <a href="/<?= $alias ?>/blend/<?= $blend->name ?><?= $query ?>" <?= $iscurrentpackage ? 'class="current"' : ''?>><?= @$package->label ?? $alias ?></a>
                                 <?php endforeach ?>
                             </div>
                         </div>
