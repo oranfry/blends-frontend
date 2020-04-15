@@ -87,7 +87,7 @@ foreach ($all_fields as $field) {
 
 apply_filters();
 
-$filters = get_current_filters($all_fields);
+$filters = array_merge(@$blend->filters ?? [], get_current_filters($all_fields));
 
 if (is_string(@$blend->cum)) {
     $cum = false;
@@ -170,7 +170,7 @@ if (count(filter_objects($fields, 'summary', 'is', 'sum'))) {
     $summaries = [];
 
     if ($blend->past && @$daterange && $daterange->from) {
-        $summary_filters = get_past_filters($all_fields);
+        $summary_filters = array_merge(@$blend->filters ?? [], get_past_filters($all_fields));
         $past_summaries = Blend::summaries(BLEND_NAME, $summary_filters);
         $summaries = [
             'initial' => $past_summaries['initial'],
