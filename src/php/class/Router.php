@@ -2,20 +2,19 @@
 class Router
 {
     private static $routes = [
-        '/([a-z]+)/blend/([a-z]+)' => ['PACKAGE_NAME', 'BLEND_NAME', 'PAGE' => 'blend/index'],
-        '/([a-z]+)/([a-z]+)' => ['PACKAGE_NAME', 'LINETYPE_NAME', 'LINE_ID' => null, 'PAGE' => 'line/index'],
-        '/([a-z]+)/([a-z]+)/save' => ['PACKAGE_NAME', 'LINETYPE_NAME', 'LINE_ID' => null, 'PAGE' => 'line/save'],
-        '/([a-z]+)/([a-z]+)/([0-9]+)' => ['PACKAGE_NAME', 'LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line/index'],
-        '/([a-z]+)/([a-z]+)/([0-9]+)/save' => ['PACKAGE_NAME', 'LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line/save'],
-        '/([a-z]+)/([a-z]+)/([0-9]+)/print' => ['PACKAGE_NAME', 'LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line/print'],
-
-        '/api/([a-z]+)/blend/([a-z]+)' => ['PACKAGE_NAME', 'BLEND_NAME', 'PAGE' => 'blend/index', 'JSON' => true],
-        '/api/([a-z]+)/blend/([a-z]+)/delete' => ['PACKAGE_NAME', 'BLEND_NAME', 'PAGE' => 'blend/delete'],
-        '/api/([a-z]+)/blend/([a-z]+)/update' => ['PACKAGE_NAME', 'BLEND_NAME', 'PAGE' => 'blend/update'],
-        '/api/([a-z]+)/blend/([a-z]+)/print' => ['PACKAGE_NAME', 'BLEND_NAME', 'PAGE' => 'blend/print'],
-        '/api/([a-z]+)/([a-z]+)/([a-z]+)/add' => ['PACKAGE_NAME', 'BLEND_NAME', 'LINETYPE_NAME', 'PAGE' => 'line/save', 'LINE_ID' => null, 'BULK_ADD' => true],
-        '/api/([a-z]+)/([a-z]+)/([0-9]+)/unlink' => ['PACKAGE_NAME', 'LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line/unlink'],
-        '/api/([a-z]+)/([a-z]+)/([0-9]+)/delete' => ['PACKAGE_NAME', 'LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line/delete'],
+        '/blend/([a-z]+)' => ['BLEND_NAME', 'PAGE' => 'blend/index'],
+        '/([a-z]+)' => ['LINETYPE_NAME', 'LINE_ID' => null, 'PAGE' => 'line/index'],
+        '/([a-z]+)/save' => ['LINETYPE_NAME', 'LINE_ID' => null, 'PAGE' => 'line/save'],
+        '/([a-z]+)/([0-9]+)' => ['LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line/index'],
+        '/([a-z]+)/([0-9]+)/save' => ['LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line/save'],
+        '/([a-z]+)/([0-9]+)/print' => ['LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line/print'],
+        '/api/blend/([a-z]+)' => ['BLEND_NAME', 'PAGE' => 'blend/index', 'JSON' => true],
+        '/api/blend/([a-z]+)/delete' => ['BLEND_NAME', 'PAGE' => 'blend/delete'],
+        '/api/blend/([a-z]+)/update' => ['BLEND_NAME', 'PAGE' => 'blend/update'],
+        '/api/blend/([a-z]+)/print' => ['BLEND_NAME', 'PAGE' => 'blend/print'],
+        '/api/([a-z]+)/([a-z]+)/add' => ['BLEND_NAME', 'LINETYPE_NAME', 'PAGE' => 'line/save', 'LINE_ID' => null, 'BULK_ADD' => true],
+        '/api/([a-z]+)/([0-9]+)/unlink' => ['LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line/unlink'],
+        '/api/([a-z]+)/([0-9]+)/delete' => ['LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line/delete'],
 
         '/download/(.*)' => ['FILE', 'PAGE' => 'download'],
     ];
