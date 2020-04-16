@@ -17,18 +17,40 @@
                                     $ddlabel = null;
                                     $current_navgroup = null;
                                     $current_navgroup_items = [];
+
+                                    foreach ($nav as $key => $value) {
+                                        if (is_string($key)) {
+                                            $blend = $blend_lookup[$value[0]];
+
+                                            if (!$blend) {
+                                                error_response('No such blend ' . $value[0]);
+                                            }
+
+                                            if (in_array(BLEND_NAME, $value)) {
+                                                $current_navgroup = $key;
+                                                $current_navgroup_items = $value;
+                                                $ddlabel = $current_navgroup;
+                                            }
+
+                                            $current = $current_navgroup == $key;
+                                            $label = $key;
+                                        } else {
+                                            $blend = $blend_lookup[$value];
+
+                                            if (!$blend) {
+                                                error_response('No such blend ' . $value);
+                                            }
+
+                                            if ($blend->name == BLEND_NAME) {
+                                                $ddlabel = @$blend->label ?? $blend->name;
+                                            }
+
+                                            $current = $blend->name == BLEND_NAME;
+                                            $label = @$blend->label ?? $blend->name;
+                                        }
+                                        ?><a href="/blend/<?= $blend->name ?><?= $query ?>" <?= $current ? 'class="current"' : '' ?>><?= $label ?></a><?php
+                                    }
                                 ?>
-                                <?php foreach ($nav as $key => $value): ?>
-                                    <?php if (is_string($key)): ?>
-                                        <?php $blend = $blend_lookup[$value[0]]; ?>
-                                        <?php if (in_array(BLEND_NAME, $value)) { $current_navgroup = $key; $current_navgroup_items = $value; $ddlabel = $current_navgroup; } ?>
-                                        <a href="/blend/<?= $blend->name ?><?= $query ?>" <?= $current_navgroup == $key ? 'class="current"' : '' ?>><?= $key ?></a>
-                                    <?php else: ?>
-                                        <?php $blend = $blend_lookup[$value]; ?>
-                                        <?php if ($blend->name == BLEND_NAME) { $ddlabel = @$blend->label ?? $blend->name; } ?>
-                                        <a href="/blend/<?= $blend->name ?><?= $query ?>" <?= $blend->name == BLEND_NAME ? 'class="current"' : '' ?>><?= @$blend->label ?? $blend->name ?></a>
-                                    <?php endif ?>
-                                <?php endforeach ?>
                             </div>
                         </div>
                         <span class="inline-modal-trigger"><?= $ddlabel ?></span>
@@ -38,10 +60,17 @@
                         <div class="navset">
                             <div class="inline-modal">
                                 <div class="nav-dropdown">
-                                    <?php foreach ($current_navgroup_items as $value): ?>
-                                        <?php $blend = $blend_lookup[$value]; ?>
-                                        <a href="/blend/<?= $blend->name ?><?= $query ?>" <?= $blend->name == BLEND_NAME ? 'class="current"' : '' ?>><?= @$blend->label ?? $blend->name ?></a>
-                                    <?php endforeach ?>
+                                    <?php
+                                        foreach ($current_navgroup_items as $value) {
+                                            $blend = $blend_lookup[$value];
+
+                                            if (!$blend) {
+                                                error_response('No such blend ' . $value);
+                                            }
+
+                                            ?><a href="/blend/<?= $blend->name ?><?= $query ?>" <?= $blend->name == BLEND_NAME ? 'class="current"' : '' ?>><?= @$blend->label ?? $blend->name ?></a><?php
+                                        }
+                                    ?>
                                 </div>
                             </div>
                             <span class="inline-modal-trigger"><?= @Blend::load(BLEND_NAME)->label ?? BLEND_NAME ?></span>

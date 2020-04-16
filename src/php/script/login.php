@@ -4,7 +4,10 @@ if (@$_POST['auth'] == Config::get()->password) {
 }
 
 if (@$_SESSION["AUTH"] == Config::get()->password) {
-    $blend = array_keys(Config::get()->blends)[0];
+    $nav = Config::get()->nav;
+    $nav0 = array_keys($nav)[0];
+    $blend = is_string($nav0) ? $nav[$nav0][0] : $nav[0];
+
     header("Location: /blend/{$blend}");
     die('Redirecting...');
 }
