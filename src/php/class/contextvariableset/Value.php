@@ -30,7 +30,7 @@ class Value extends \ContextVariableSet
                     <?php endif ?>
                 </div>
             </div>
-            <span class="inline-modal-trigger"><?= $this->value ?: $this->prefix ?></span>
+            <span class="inline-modal-trigger"><?= $this->value ?: preg_replace('/.*_/', '', $this->prefix) ?></span>
         </div><?php
     }
 }
