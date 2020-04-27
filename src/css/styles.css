@@ -599,6 +599,10 @@ textarea {
     display: none;
 }
 
+.fromtoday {
+    border-left: none;
+}
+
 a.incog {
     text-decoration: none;
     color: inherit;
