@@ -341,7 +341,6 @@
             method: 'post',
             data: {},
             success: function(data) {
-                alert(data[2] + ' records and ' + data[3] + ' links deleted by ' + data[0] + ' queries in ' + data[1] + ' seconds');
                 window.location.reload();
             },
             error: function(data){
