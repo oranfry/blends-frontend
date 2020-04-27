@@ -105,7 +105,7 @@ $seen_today = !@$currentgroup || !$daterange || strcmp($currentgroup, $from) < 0
             <?php endif ?>
 
             <?php if (!@$skip): ?>
-                <tr data-id="<?= $record->id ?>" <?php if (@$groupfield): ?>data-group="<?= @$record->{$groupfield} ?>"<?php endif ?> data-type="<?= $record->type ?>" data-parent-type="<?= @$parentType ?>" data-parent-id="<?= @$parentId ?>" class="<?php foreach (@$classes ?: [] as $_class) {
+                <tr data-id="<?= $record->id ?>" <?php if (@$groupfield): ?>data-group="<?= @$record->{$groupfield} ?>"<?php endif ?> data-type="<?= $record->type ?>" <?= @$parent ? "data-parent=\"{$parent}\"" : '' ?> data-parent-type="<?= @$parentType ?>" data-parent-id="<?= @$parentId ?>" class="<?php foreach (@$classes ?: [] as $_class) {
                     echo @$record->{"{$_class->name}"} . ' ';
                 } ?> ">
                     <?php foreach ($fields as $field): ?>

@@ -1,5 +1,6 @@
 <?php
-$linetype = Linetype::info(LINETYPE_NAME);
+$linetype = Linetype::load(LINETYPE_NAME);
+$parenttypes = Linetype::find_parent_linetypes(LINETYPE_NAME);
 $linetype_lookup = [LINETYPE_NAME => $linetype];
 $tablelink_lookup = [];
 
@@ -8,30 +9,16 @@ $parentlink = null;
 $parentid = null;
 
 if (LINE_ID) {
-    $line = Linetype::get(LINETYPE_NAME, LINE_ID);
+    $line = @$linetype->find_lines([(object)['field' => 'id', 'value' => LINE_ID]])[0];
 
     if (!$line) {
         error_response('No such line', 400);
     }
 
-    $child_sets = [];
-
-    foreach ($linetype->children as $child) {
-        $childset = Linetype::childset(LINETYPE_NAME, LINE_ID, $child->label);
-
-        if (!isset($linetype_lookup[$child->linetype])) {
-            $linetype_lookup[$child->linetype] = Linetype::info($child->linetype);
-        }
-
-        if (!$childset) {
-            error_response('No such childset: ' . $child->label, 400);
-        }
-
-        $child_sets[$child->label] = $childset;
-    }
+    $linetype->load_children($line);
 }
 
-foreach ($linetype->parenttypes as $_parenttype) {
+foreach ($parenttypes as $_parenttype) {
     if (!@$_GET[$_parenttype]) {
         continue;
     }
@@ -52,7 +39,7 @@ foreach (@$linetype->children ?: [] as $child) {
     $tablelink_lookup[$child->parent_link] = Tablelink::info($child->parent_link);
 }
 
-$suggested_values = Linetype::suggested(LINETYPE_NAME);
+$suggested_values = $linetype->get_suggested_values();
 
 $hasFileFields = in_array('file', array_map(function ($f) {
     return $f->type;
@@ -68,5 +55,4 @@ return [
     'parentlink' => $parentlink,
     'parenttype' => $parenttype,
     'parentid' => $parentid,
-    'child_sets' => @$child_sets,
 ];

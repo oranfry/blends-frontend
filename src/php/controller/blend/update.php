@@ -2,7 +2,7 @@
 define('LAYOUT', 'json');
 
 $data = json_decode(file_get_contents('php://input'));
-$blend = Blend::info(BLEND_NAME);
+$blend = Blend::load(BLEND_NAME);
 
 if (@$_GET['selection']) {
     $filters = [
@@ -18,7 +18,7 @@ if (@$_GET['selection']) {
     $filters = get_current_filters($blend->fields);
 }
 
-$result = Blend::update(BLEND_NAME, $filters, $data);
+$result = $blend->update($filters, $data);
 
 return [
     'data' => $result,

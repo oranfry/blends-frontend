@@ -50,23 +50,22 @@
         </form>
     </div>
     <?php
-    if (isset($child_sets)) {
         $parentType = $linetype->name;
         $parentId = $line->id;
 
         foreach (@$linetype->children ?: [] as $child) {
             $child_linetype = $linetype_lookup[$child->linetype];
-            $records = $child_sets[$child->label]->lines;
+            $records = $line->{$child->label};
             $types = [$child_linetype->name];
-            $label = @$child->label ?: $child_linetype->name;
             $fields = @$child->list_fields ?: $child_linetype->fields;
-            $summaries = [$label => @$child_sets[$child->label]->summary ?: []];
+            $summaries = [$child->label => @$line->{"{$child->label}_summary"} ?: []];
             $tablelink = $tablelink_lookup[$child->parent_link];
             $parent_query = "parentlink={$child->parent_link}&{$tablelink->ids[0]}=" . LINE_ID;
+            $parent = "{$child->parent_link}:{$tablelink->ids[0]}=" . LINE_ID;
             $groupfield = 'group';
 
             foreach ($records as $record) {
-                $record->group = $label;
+                $record->group = $child->label;
             }
 
             if (property_exists($line, 'date')) {
@@ -75,7 +74,6 @@
 
             require APP_HOME . "/src/php/partial/showas/list.php";
         }
-    }
     ?>
     <div style="clear: both"></div>
     <?php

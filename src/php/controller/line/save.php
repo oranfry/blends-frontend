@@ -4,7 +4,7 @@ use contextvariableset\Daterange;
 
 define('LAYOUT', 'json');
 
-$linetype = Linetype::info(LINETYPE_NAME);
+$linetype = Linetype::load(LINETYPE_NAME);
 $line_template =  json_decode(file_get_contents('php://input'));
 $datefield = null;
 
@@ -31,6 +31,8 @@ if ($datefield && defined('BULK_ADD')) {
     $dates = [null];
 }
 
+$lines = [];
+
 foreach ($dates as $date) {
     $line = clone $line_template;
 
@@ -38,9 +40,9 @@ foreach ($dates as $date) {
         $line->{$datefield->name} = $date;
     }
 
-    $linetype = Linetype::save(LINETYPE_NAME, $line, LINE_ID);
+    $lines[] = $line;
 }
 
 return [
-    'data' => $line,
+    'data' => $linetype->save($lines),
 ];

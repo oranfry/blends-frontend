@@ -485,8 +485,7 @@
         var $row = $(this).closest('tr');
         var id = $row.data('id');
         var type = $row.data('type');
-        var parentId = $row.data('parent-id');
-        var parentType = $row.data('parent-type');
+        var parent = $row.data('parent');
 
         if (!confirm(action + ' ' + type + ' ' + id + '?')) {
             return;
@@ -494,8 +493,8 @@
 
         var query = '';
 
-        if (parentId) {
-            query = '?&parenttype=' + parentType + '&parentid=' + parentId;
+        if (parent) {
+            query = '?&parent=' + parent;
         }
 
         $.ajax('/api/' + type + '/' + id + '/' + action + query, {

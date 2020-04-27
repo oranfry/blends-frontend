@@ -1,6 +1,14 @@
 <?php
 define('LAYOUT', 'json');
-$result = Linetype::print(LINETYPE_NAME, LINE_ID);
+
+$linetype = Linetype::load(LINETYPE_NAME);
+
+$result = $linetype->print([
+    (object) [
+        'field' => 'id',
+        'value' => LINE_ID,
+    ],
+]);
 
 return [
     'data' => $result,

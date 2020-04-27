@@ -1,7 +1,7 @@
 <?php
 define('LAYOUT', 'json');
 
-$blend = Blend::info(BLEND_NAME);
+$blend = Blend::load(BLEND_NAME);
 
 if (@$_GET['selection']) {
     $filters = [
@@ -17,7 +17,7 @@ if (@$_GET['selection']) {
     $filters = get_current_filters($blend->fields);
 }
 
-$result = Blend::delete(BLEND_NAME, $filters);
+$result = $blend->delete($filters);
 
 return [
     'data' => $result,

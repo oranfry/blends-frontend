@@ -5,12 +5,16 @@ use contextvariableset\Filter;
 use contextvariableset\Hidden;
 use contextvariableset\Showas;
 
-$blends = Blend::list();
+$blends = [];
 $blend_lookup = [];
 
-foreach ($blends as $_blend) {
-    $blend_lookup[$_blend->name] = $_blend;
+foreach (array_keys(Config::get()->blends) as $name) {
+    $_blend = Blend::load($name);
+    $blends[] = $_blend;
+    $blend_lookup[$name] = $_blend;
 }
+
+unset($_blend);
 
 $blend = $blend_lookup[BLEND_NAME];
 $linetype_lookup = [];
@@ -26,7 +30,7 @@ $types = array_values(
 );
 
 $linetypes = array_map(function($v){
-    return Linetype::info($v);
+    return Linetype::load($v);
 }, $blend->linetypes);
 
 foreach ($linetypes as $linetype) {
@@ -114,7 +118,7 @@ foreach ($fields as $field) {
     }
 }
 
-$records = Blend::search(BLEND_NAME, $filters);
+$records = $blend->search($filters);
 
 foreach ($records as $record) {
     foreach ($all_fields as $field) {
@@ -171,9 +175,9 @@ if (count(filter_objects($fields, 'summary', 'is', 'sum'))) {
 
     if ($blend->past && @$daterange && $daterange->from) {
         $summary_filters = array_merge(@$blend->filters ?? [], get_past_filters($all_fields));
-        $past_summaries = Blend::summaries(BLEND_NAME, $summary_filters);
+        $past_summary = $blend->summary($summary_filters);
         $summaries = [
-            'initial' => $past_summaries['initial'],
+            'initial' => $past_summary,
         ];
 
         foreach ($all_fields as $field) {

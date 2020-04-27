@@ -1,4 +1,11 @@
 <?php
 define('LAYOUT', 'json');
 
-$result = Linetype::delete(LINETYPE_NAME, LINE_ID);
+$linetype = Linetype::load(LINETYPE_NAME);
+
+$result = $linetype->delete([
+    (object) [
+        'field' => 'id',
+        'value' => LINE_ID,
+    ],
+]);
