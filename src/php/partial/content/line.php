@@ -77,8 +77,9 @@
     ?>
     <div style="clear: both"></div>
     <?php
-    if (@$line->astext) {
-        ?><pre id="printpreview" class="printpreview"><?= @$line->astext ?><button class="print-line">Print</button></pre><br><?php
+    $astext = $linetype->astext($line);
+    if ($astext) {
+        ?><pre id="printpreview" class="printpreview"><?= $astext ?><button class="print-line">Print</button></pre><br><?php
     }
     ?>
     <pre id="output" style="display: inline-block"></pre><br>
