@@ -36,6 +36,10 @@ foreach ($parenttypes as $_parenttype) {
 }
 
 foreach (@$linetype->children ?: [] as $child) {
+    if (!isset($linetype_lookup[$child->linetype])) {
+       $linetype_lookup[$child->linetype] = Linetype::load($child->linetype);
+    }
+
     $tablelink_lookup[$child->parent_link] = Tablelink::info($child->parent_link);
 }
 
