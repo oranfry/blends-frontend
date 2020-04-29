@@ -118,14 +118,6 @@ $adhocfilters = ContextVariableSet::get('adhocfilters');
                 <div style="clear: both"></div>
             </div>
 
-            <div class="form-row" data-repeaters="month year">
-                <div class="form-row__label">Offset</div>
-                <div class="form-row__value">
-                    <input class="cv-surrogate no-autosubmit" data-for="<?= $repeater->prefix ?>__offset" type="text" value="<?= $repeater->offset ?>" style="width: 7em">
-                </div>
-                <div style="clear: both"></div>
-            </div>
-
             <div class="form-row" data-repeaters="day month year">
                 <div class="form-row__label">F/F</div>
                 <div class="form-row__value">
@@ -135,6 +127,14 @@ $adhocfilters = ContextVariableSet::get('adhocfilters');
                             <option <?= ($i + 1 == $repeater->ff) ? 'selected="selected"' : '' ?> value="<?= $i + 1?>"><?= $ff ?></option>
                         <?php endforeach ?>
                     </select>
+                </div>
+                <div style="clear: both"></div>
+            </div>
+
+            <div class="form-row" data-repeaters="month year">
+                <div class="form-row__label">Offset</div>
+                <div class="form-row__value">
+                    <input class="cv-surrogate no-autosubmit" data-for="<?= $repeater->prefix ?>__offset" type="text" value="<?= $repeater->offset ?>" style="width: 7em">
                 </div>
                 <div style="clear: both"></div>
             </div>
