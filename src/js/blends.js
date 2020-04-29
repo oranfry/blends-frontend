@@ -229,7 +229,7 @@
             var reader = new FileReader();
 
             reader.onload = function(event) {
-                data[$input.attr('name')] = btoa(event.target.result);
+                data[$input.attr('name') + '_upload'] = btoa(event.target.result);
                 numLoadedFiles++;
 
                 if (numLoadedFiles == $fileInputs.length) {
@@ -294,7 +294,7 @@
             var reader = new FileReader();
 
             reader.onload = function(event) {
-                data[$input.attr('name')] = btoa(event.target.result);
+                data[$input.attr('name') + '_upload'] = btoa(event.target.result);
                 numLoadedFiles++;
 
                 if (numLoadedFiles == $fileInputs.length) {
@@ -565,7 +565,7 @@
             var reader = new FileReader();
 
             reader.onload = function(event) {
-                data[$input.attr('name')] = btoa(event.target.result);
+                data[$input.attr('name') + '_upload'] = btoa(event.target.result);
                 numLoadedFiles++;
 
                 if (numLoadedFiles == $fileInputs.length) {
