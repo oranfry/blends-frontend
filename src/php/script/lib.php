@@ -372,18 +372,8 @@ function get_repeater_dates($repeater, $from, $to)
     }
 
     if ($fastforward) {
-        $rewind = ($fastforward + 1) % 7;
-        $sdelta = date('w', $start) - date('w', $rewind);
-
-        if ($sdelta > 0) {
-            $start = date_shift($start, "-{$sdelta} day");
-        }
-
-        $edelta = date('w', $end) - date('w', $rewind);
-
-        if ($edelta > 0) {
-            $start = date_shift($end, "-{$edelta} day");
-        }
+        $start = date_shift($start, "-6 day");
+        $end = date_shift($end, "-6 day");
     }
 
     $dates = [];
@@ -408,10 +398,8 @@ function get_repeater_dates($repeater, $from, $to)
 
     for ($i = 0; $i < count($dates); $i++) {
         if ($fastforward) {
-            $delta = date('w', $fastforward) - date('w', $dates[$i]);
-
-            if ($delta > 0) {
-                $dates[$i] = date_shift($dates[$i], "+{$delta} day");
+            while (date('w', strtotime($dates[$i])) != $fastforward - 1) {
+                $dates[$i] = date_shift($dates[$i], "+1 day");
             }
         }
 
