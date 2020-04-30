@@ -762,6 +762,11 @@ input[type="number"]::-webkit-inner-spin-button {
     white-space: nowrap;
 }
 
+.file-field-controls__change, .file-field-controls__delete {
+    margin-left: 1em;
+    cursor: pointer;
+}
+
 @media screen {
     .wrapper {
         max-width: 960px;

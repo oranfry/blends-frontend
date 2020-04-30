@@ -681,6 +681,41 @@
         return data;
     }
 
+    $('.file-field-controls__change').click(function(){
+        var $controls = $(this).closest('.file-field-controls');
+        var $input = $controls.find('.file-field-controls__input');
+        var $actions = $controls.find('.file-field-controls__actions');
+        var $willdelete = $controls.find('.file-field-controls__willdelete');
+
+        $input.show();
+        $willdelete.hide();
+        $actions.hide();
+    });
+
+    $('.file-field-controls__delete').click(function(){
+        var $controls = $(this).closest('.file-field-controls');
+        var $input = $controls.find('.file-field-controls__input');
+        var $actions = $controls.find('.file-field-controls__actions');
+        var $willdelete = $controls.find('.file-field-controls__willdelete');
+        var name = $controls.find('input[type="file"]').attr('name');
+
+        $willdelete.append($('<input type="hidden" name="' + name + '_delete" value="1">'));
+        $willdelete.show();
+        $actions.hide();
+    });
+
+    $('.file-field-controls__cancel').click(function(){
+        var $controls = $(this).closest('.file-field-controls');
+        var $input = $controls.find('.file-field-controls__input');
+        var $actions = $controls.find('.file-field-controls__actions');
+        var $willdelete = $controls.find('.file-field-controls__willdelete');
+
+        $controls.find('input[type="hidden"]').remove();
+        $input.hide();
+        $willdelete.hide();
+        $actions.show();
+    });
+
     function getFiltersQuery()
     {
         var queryParams = getQueryParams();
