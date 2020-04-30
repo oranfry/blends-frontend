@@ -689,40 +689,43 @@
         return data;
     }
 
-    $('.file-field-controls__change').click(function(){
+    $('.file-field-controls__delete, .file-field-controls__generate, .file-field-controls__cancel, .file-field-controls__change').click(function(){
         var $controls = $(this).closest('.file-field-controls');
         var $input = $controls.find('.file-field-controls__input');
         var $actions = $controls.find('.file-field-controls__actions');
         var $willdelete = $controls.find('.file-field-controls__willdelete');
-
-        $input.show();
-        $willdelete.hide();
-        $actions.hide();
-    });
-
-    $('.file-field-controls__delete').click(function(){
-        var $controls = $(this).closest('.file-field-controls');
-        var $input = $controls.find('.file-field-controls__input');
-        var $actions = $controls.find('.file-field-controls__actions');
-        var $willdelete = $controls.find('.file-field-controls__willdelete');
+        var $willgenerate = $controls.find('.file-field-controls__willgenerate');
         var name = $controls.find('input[type="file"]').attr('name');
 
-        $willdelete.append($('<input type="hidden" name="' + name + '_delete" value="1">'));
-        $willdelete.show();
-        $actions.hide();
+        if ($(this).hasClass('file-field-controls__delete')) {
+            $willdelete.append($('<input type="hidden" name="' + name + '_delete" value="1">'));
+            $input.hide();
+            $willdelete.show();
+            $actions.hide();
+        } else if ($(this).hasClass('file-field-controls__change')) {
+            $input.show();
+            $willdelete.hide();
+            $actions.hide();
+        } else if ($(this).hasClass('file-field-controls__generate')) {
+            $willgenerate.append($('<input type="hidden" name="' + name + '_generate" value="1">'));
+            $input.hide();
+            $willgenerate.show();
+            $actions.hide();
+        } else if ($(this).hasClass('file-field-controls__cancel')) {
+            $controls.find('input[type="hidden"]').remove();
+            $willdelete.hide();
+            $willgenerate.hide();
+
+            if ($actions.length) {
+                $actions.show();
+                $input.hide();
+            } else {
+                $actions.hide();
+                $input.show();
+            }
+        }
     });
 
-    $('.file-field-controls__cancel').click(function(){
-        var $controls = $(this).closest('.file-field-controls');
-        var $input = $controls.find('.file-field-controls__input');
-        var $actions = $controls.find('.file-field-controls__actions');
-        var $willdelete = $controls.find('.file-field-controls__willdelete');
-
-        $controls.find('input[type="hidden"]').remove();
-        $input.hide();
-        $willdelete.hide();
-        $actions.show();
-    });
 
     function getFiltersQuery()
     {
