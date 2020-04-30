@@ -176,6 +176,14 @@
             var rel_field = $(this).attr('name').replace(/^apply_/, '');
             var $rel_field = $editForm.find('[name="' + rel_field + '"]');
             data[rel_field] = $rel_field.val();
+
+            if ($rel_field.is('[type="file"]')) {
+                var $rel_field_delete = $editForm.find('[name="' + rel_field + '_delete"]');
+
+                if ($rel_field_delete.length) {
+                    data[rel_field + '_delete'] = $rel_field_delete.val();
+                }
+            }
         });
 
         if (!Object.keys(data).length) {
