@@ -25,10 +25,12 @@ require APP_HOME . '/src/php/partial/showas/' . SHOWAS . '.php';
                 <div class="form-row">
                     <div class="form-row__label"><?= $field->name ?></div>
                     <div class="form-row__value">
-                        <div style="position: absolute; left: 0;">
-                            <input type="checkbox" <?= $checked ? 'checked="checked"' : '' ?> name="apply_<?= $field->name ?>">
-                        </div>
-                        <?php require $field_inc; ?>
+                        <?php if ($field->type != 'file'): ?>
+                            <div style="position: absolute; left: 0;">
+                                <input type="checkbox" <?= $checked ? 'checked="checked"' : '' ?> name="apply_<?= $field->name ?>">
+                            </div>
+                        <?php endif ?>
+                        <?php $bulk = true; require $field_inc; unset($bulk); ?>
                     </div>
                     <div style="clear: both"></div>
                 </div>

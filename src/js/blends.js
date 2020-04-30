@@ -171,22 +171,24 @@
         var blend = $editForm.data('blend');
         var $selected = $('tr[data-id].selected');
         var query;
+        var $fileInputs = $editForm.find('input[type="file"]');
 
-        $("input[name^='apply_']:checked").each(function() {
+        $editForm.find("input[name^='apply_']:checked").each(function() {
             var rel_field = $(this).attr('name').replace(/^apply_/, '');
             var $rel_field = $editForm.find('[name="' + rel_field + '"]');
+
             data[rel_field] = $rel_field.val();
-
-            if ($rel_field.is('[type="file"]')) {
-                var $rel_field_delete = $editForm.find('[name="' + rel_field + '_delete"]');
-
-                if ($rel_field_delete.length) {
-                    data[rel_field + '_delete'] = $rel_field_delete.val();
-                }
-            }
         });
 
-        if (!Object.keys(data).length) {
+        $fileInputs.each(function() {
+            var rel_field = $(this).attr('name') + '_delete';
+
+            $editForm.find('[name="' + rel_field + '"]').each(function(){
+                data[rel_field] = $(this).val();
+            });
+        });
+
+        if (!Object.keys(data).length && !$fileInputs.length) {
             closeModals();
             return;
         }
@@ -212,7 +214,6 @@
             });
         };
 
-        var $fileInputs = $editForm.find('input[type="file"]');
         var numLoadedFiles = 0;
 
         if (!$fileInputs.length) {
@@ -222,7 +223,6 @@
         $fileInputs.each(function(){
             var $input = $(this);
             var file = $input[0].files[0];
-            delete data[$input.attr('name')];
 
             if (!file) {
                 numLoadedFiles++;
