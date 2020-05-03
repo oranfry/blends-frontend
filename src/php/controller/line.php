@@ -2,7 +2,6 @@
 $linetype = Linetype::load(LINETYPE_NAME);
 $parenttypes = Linetype::find_parent_linetypes(LINETYPE_NAME);
 $linetype_lookup = [LINETYPE_NAME => $linetype];
-$tablelink_lookup = [];
 
 $parenttype = null;
 $parentlink = null;
@@ -21,8 +20,9 @@ if (LINE_ID) {
 foreach ($parenttypes as $pt) {
     foreach (@$pt->children ?: [] as $c) {
         if ($c->parent_link == @$_GET['parentlink']) {
-            $parenttype = $pt->name;
+            $tablelink = Tablelink::load($c->parent_link);
             $parentlink = $c->parent_link;
+            $parenttype = $tablelink->ids[@$tablelink->reverse ? 1 : 0];
             $parentid = (int) $_GET[$parenttype];
             break 2;
         }
@@ -31,7 +31,7 @@ foreach ($parenttypes as $pt) {
 
 foreach (@$linetype->children ?: [] as $child) {
     if (!isset($linetype_lookup[$child->linetype])) {
-       $linetype_lookup[$child->linetype] = Linetype::load($child->linetype);
+        $linetype_lookup[$child->linetype] = Linetype::load($child->linetype);
     }
 
     $tablelink_lookup[$child->parent_link] = Tablelink::info($child->parent_link);

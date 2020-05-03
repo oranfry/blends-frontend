@@ -59,7 +59,7 @@
             $types = [$child_linetype->name];
             $fields = @$child->list_fields ?: $child_linetype->fields;
             $summaries = [$child->label => @$line->{"{$child->label}_summary"} ?: []];
-            $tablelink = $tablelink_lookup[$child->parent_link];
+            $tablelink = Tablelink::load($child->parent_link);
             $parent_query = "parentlink={$child->parent_link}&{$tablelink->ids[0]}=" . LINE_ID;
             $parent = "{$child->parent_link}:{$tablelink->ids[0]}=" . LINE_ID;
             $groupfield = 'group';
