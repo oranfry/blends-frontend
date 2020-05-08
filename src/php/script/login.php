@@ -40,7 +40,7 @@ if (isset($_POST['auth'])) {
                             <h1 class="desktop-only"><?= Config::get()->instance_name ?: 'Blends' ?></h1>
                                 <div class="cred-line">
                                     <p>Auth Key</p>
-                                    <input type="text" name="auth" id="auth" autocomplete="off">
+                                    <input type="password" name="auth" id="auth" autocomplete="off">
                                 </div>
                                 <div class="cred-line">
                                     <input type="submit" value="Proceed">
