@@ -4,18 +4,26 @@
     <div class="line">
         <form method="post" class="edit-form" <?= $hasFileFields ? 'enctype="multipart/form-data"' : '' ?>>
             <?php
-                if (@$parentid) {
-                    $value = "{$parentlink}:{$parenttype}={$parentid}";
-                    $field = (object) ['name' => 'parent'];
-                    $options = []; ?>
+                foreach ($linetype->find_incoming_links() as $parent) {
+                    $tablelink = Tablelink::load($parent->parent_link);
+                    $side = @$parent->reverse ? 1 : 0;
+
+                    $field = (object) ['name' => $tablelink->ids[$side]];
+                    $value = @$line->{$field->name} ?: @$_GET[$field->name] ?: @$field->default;
+
+                    $options = [];
+                    if (@$line->{$tablelink->ids[$side]}) {
+                        $options[] = $line->{$tablelink->ids[$side]};
+                    }
+                    ?>
                     <div class="form-row">
-                        <div class="form-row__label">parent</div>
+                        <div class="form-row__label"><?= $tablelink->ids[$side] ?></div>
                         <div class="form-row__value">
                             <?php require APP_HOME . "/src/php/partial/fieldtype/text.php"; ?>
                         </div>
                         <div style="clear: both"></div>
                     </div>
-                    <?php
+                        <?php
                 }
 
                 foreach ($linetype->fields as $field) {
