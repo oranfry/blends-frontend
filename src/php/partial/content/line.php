@@ -31,7 +31,11 @@
                         continue;
                     }
 
-                    $value = @$line->{$field->name} ?: @$_GET[$field->name] ?: @$field->default;
+                    if ($field->type == 'file') {
+                        $value = @$line->{"{$field->name}_path"};
+                    } else {
+                        $value = @$line->{$field->name} ?: @$_GET[$field->name] ?: @$field->default;
+                    }
                     $options = @$suggested_values[$field->name];
 
                     if ($value && $options && !in_array($value, $options)) {
