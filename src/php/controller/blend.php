@@ -17,7 +17,6 @@ foreach (array_keys(Config::get()->blends) as $name) {
 unset($_blend);
 
 $blend = $blend_lookup[BLEND_NAME];
-$linetype_lookup = [];
 $all_fields = $blend->fields;
 
 $types = array_values(
@@ -32,10 +31,6 @@ $types = array_values(
 $linetypes = array_map(function($v){
     return Linetype::load($v);
 }, $blend->linetypes);
-
-foreach ($linetypes as $linetype) {
-    $linetype_lookup[$linetype->name] = $linetype;
-}
 
 $classes = filter_objects($all_fields, 'type', 'is', 'class');
 $fields = filter_objects(filter_objects($all_fields, 'hide', 'not', true), 'type', 'not', 'class');
@@ -250,7 +245,6 @@ foreach ($filters as $filter) {
 return [
     'records' => $records,
     'blend_lookup' => $blend_lookup,
-    'linetype_lookup' => $linetype_lookup,
     'linetypes' => $linetypes,
     'classes' => $classes,
     'fields' => $fields,

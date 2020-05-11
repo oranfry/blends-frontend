@@ -90,7 +90,7 @@ $seen_today = !@$currentgroup || !$daterange || strcmp($currentgroup, $from) < 0
                                     <div class="inline-modal inline-modal--right">
                                         <nav>
                                             <?php foreach ($types as $_type): ?>
-                                                <a href="<?= addlink($_type, @$record->{$groupfield}, @$groupfield, @$defaultgroup, @$parent_query, $prepop) ?>"><i class="icon icon--mono icon--<?= $linetype_lookup[$_type]->icon ?>"></i></a>
+                                                <a href="<?= addlink($_type, @$record->{$groupfield}, @$groupfield, @$defaultgroup, @$parent_query, $prepop) ?>"><i class="icon icon--mono icon--<?= Linetype::load($_type)->icon ?>"></i></a>
                                             <?php endforeach ?>
                                         </nav>
                                     </div>
@@ -105,7 +105,7 @@ $seen_today = !@$currentgroup || !$daterange || strcmp($currentgroup, $from) < 0
             <?php endif ?>
 
             <?php if (!@$skip): ?>
-                <tr data-id="<?= $record->id ?>" <?php if (@$groupfield): ?>data-group="<?= @$record->{$groupfield} ?>"<?php endif ?> data-type="<?= $record->type ?>" <?= @$parent ? "data-parent=\"{$parent}\"" : '' ?> data-parent-type="<?= @$parentType ?>" data-parent-id="<?= @$parentId ?>" class="<?php foreach (@$classes ?: [] as $_class) {
+                <tr data-id="<?= $record->id ?>" <?php if (@$groupfield): ?>data-group="<?= @$record->{$groupfield} ?>"<?php endif ?> data-type="<?= $record->type ?>" <?= @$parent ? "data-parent=\"{$parent}\"" : '' ?> class="<?php foreach (@$classes ?: [] as $_class) {
                     echo @$record->{"{$_class->name}"} . ' ';
                 } ?> ">
                     <?php foreach ($fields as $field): ?>
@@ -134,7 +134,7 @@ $seen_today = !@$currentgroup || !$daterange || strcmp($currentgroup, $from) < 0
                     <?php endforeach ?>
                     <td class="printhide" style="text-align: right; vertical-align: middle">
                         <a href="<?= editlink($record->id, $record->type) ?>"><i class="icon icon--edit"></i></a>
-                        <?php if (@$parentId): ?>
+                        <?php if (@$parent): ?>
                             <i class="trigger-unlink-line icon icon--unlink"></i>
                         <?php endif ?>
                         <i class="trigger-delete-line icon icon--times"></i>
@@ -154,6 +154,6 @@ $seen_today = !@$currentgroup || !$daterange || strcmp($currentgroup, $from) < 0
 
 <nav>
     <?php foreach ($types as $_type): ?>
-        <a href="<?= addlink($_type, @$defaultgroup, @$groupfield, @$defaultgroup, @$parent_query, @$prepop) ?>"><i class="icon icon--mono icon--plus"></i> <i class="icon icon--mono icon--<?= $linetype_lookup[$_type]->icon ?>"></i></a>
+        <a href="<?= addlink($_type, @$defaultgroup, @$groupfield, @$defaultgroup, @$parent_query, @$prepop) ?>"><i class="icon icon--mono icon--plus"></i> <i class="icon icon--mono icon--<?= Linetype::load($_type)->icon ?>"></i></a>
     <?php endforeach ?>
 </nav>

@@ -4,20 +4,20 @@
     <div class="line">
         <form method="post" class="edit-form" <?= $hasFileFields ? 'enctype="multipart/form-data"' : '' ?>>
             <?php
-                foreach ($linetype->find_incoming_links() as $parent) {
-                    $tablelink = Tablelink::load($parent->parent_link);
-                    $side = @$parent->reverse ? 1 : 0;
+                foreach ($linetype->find_incoming_links() as $incoming) {
+                    $tablelink = Tablelink::load($incoming->parent_link);
+                    $side = @$incoming->reverse ? 1 : 0;
 
-                    $field = (object) ['name' => $tablelink->ids[$side]];
+                    $field = (object) ['name' => $incoming->parent_linetype];
                     $value = @$line->{$field->name} ?: @$_GET[$field->name] ?: @$field->default;
 
                     $options = [];
-                    if (@$line->{$tablelink->ids[$side]}) {
-                        $options[] = $line->{$tablelink->ids[$side]};
+                    if (@$line->{$incoming->parent_linetype}) {
+                        $options[] = $line->{$incoming->parent_linetype};
                     }
                     ?>
                     <div class="form-row">
-                        <div class="form-row__label"><?= $tablelink->ids[$side] ?></div>
+                        <div class="form-row__label"><?= $incoming->parent_linetype ?></div>
                         <div class="form-row__value">
                             <?php require APP_HOME . "/src/php/partial/fieldtype/text.php"; ?>
                         </div>
@@ -62,17 +62,14 @@
         </form>
     </div>
     <?php
-        $parentType = $linetype->name;
-        $parentId = $line->id;
-
         foreach (@$linetype->children ?: [] as $child) {
-            $child_linetype = $linetype_lookup[$child->linetype];
+            $child_linetype = Linetype::load($child->linetype);
             $records = $line->{$child->label};
             $types = [$child_linetype->name];
             $fields = @$child->list_fields ?: $child_linetype->fields;
             $summaries = [$child->label => @$line->{"{$child->label}_summary"} ?: []];
             $tablelink = Tablelink::load($child->parent_link);
-            $parent_query = "parentlink={$child->parent_link}&{$tablelink->ids[0]}=" . LINE_ID;
+            $parent_query = "{$linetype->name}=" . LINE_ID;
             $parent = "{$child->parent_link}:{$tablelink->ids[0]}=" . LINE_ID;
             $groupfield = 'group';
 

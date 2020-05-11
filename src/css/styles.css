@@ -623,7 +623,9 @@ a.cv-manip, .open-custom-daterange {
     user-select: none; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; -o-user-select: none;
 }
 
-.trigger-edit-line, .trigger-edit-record, .trigger-unlink-record, .trigger-delete-record {
+.trigger-edit-line, .trigger-edit-record,
+.trigger-unlink-record, .trigger-unlink-line,
+.trigger-delete-record, .trigger-delete-line {
     cursor: pointer;
 }
 
