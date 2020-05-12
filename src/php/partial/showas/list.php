@@ -119,7 +119,7 @@ $seen_today = !@$currentgroup || !$daterange || strcmp($currentgroup, $from) < 0
                                 ?><i class="icon icon--mono icon--<?= @$field->translate->{$value} ?? $value ?>"></i><?php
                             } elseif ($field->type == 'color') {
                                 ?><span style="display: inline-block; height: 1em; width: 1em; background-color: #<?= $value ?>;">&nbsp;</span><?php
-                            } elseif ($field->type == 'file' && $record->{"{$field->name}_path"}) {
+                            } elseif ($field->type == 'file' && @$record->{"{$field->name}_path"}) {
                                ?><a href="/download/<?= $record->{"{$field->name}_path"} ?>" download><i class="icon icon--mono icon--<?= @$field->translate[$field->icon] ?? $field->icon ?>"></i></a><?php
                             } else {
                                 echo is_callable(@$field->prefix) ? ($field->prefix)($record) : @$field->prefix;
