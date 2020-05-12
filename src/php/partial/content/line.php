@@ -8,16 +8,16 @@
                     $tablelink = Tablelink::load($incoming->parent_link);
                     $side = @$incoming->reverse ? 1 : 0;
 
-                    $field = (object) ['name' => $incoming->parent_linetype];
-                    $value = @$line->{$field->name} ?: @$_GET[$field->name] ?: @$field->default;
+                    $field = (object) ['name' => $incoming->parent_link];
+                    $value = @$line->{$incoming->parent_link} ?: @$_GET[$field->name] ?: @$field->default;
 
                     $options = [];
-                    if (@$line->{$incoming->parent_linetype}) {
-                        $options[] = $line->{$incoming->parent_linetype};
+                    if (@$line->{$incoming->parent_link}) {
+                        $options[] = $line->{$incoming->parent_link};
                     }
                     ?>
                     <div class="form-row">
-                        <div class="form-row__label"><?= $incoming->parent_linetype ?></div>
+                        <div class="form-row__label" title="<?= $incoming->parent_link ?>"><?= $incoming->parent_linetype ?></div>
                         <div class="form-row__value">
                             <?php require APP_HOME . "/src/php/partial/fieldtype/text.php"; ?>
                         </div>
