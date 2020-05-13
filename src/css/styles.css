@@ -660,10 +660,6 @@ input.likep {
     background-color: inherit;
 }
 
-.recordaction-label {
-    font-size: 0.9em;
-}
-
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     display: none !important;

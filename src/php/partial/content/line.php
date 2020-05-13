@@ -5,8 +5,6 @@
         <form method="post" class="edit-form" <?= $hasFileFields ? 'enctype="multipart/form-data"' : '' ?>>
             <?php
                 foreach ($linetype->find_incoming_links() as $incoming) {
-                    $tablelink = Tablelink::load($incoming->parent_link);
-                    $side = @$incoming->reverse ? 1 : 0;
                     $parentaliasshort = $incoming->parent_link . '_' . $incoming->parent_linetype;
 
                     $field = (object) ['name' => $parentaliasshort];
@@ -72,7 +70,7 @@
             $summaries = [$child->label => @$line->{"{$child->label}_summary"} ?: []];
             $tablelink = Tablelink::load($child->parent_link);
             $parent_query = "{$child->parent_link}_{$linetype->name}=" . LINE_ID;
-            $parent = "{$child->parent_link}:{$tablelink->ids[0]}=" . LINE_ID;
+            $parent = "{$child->parent_link}_{$linetype->name}";
             $groupfield = 'group';
 
             foreach ($records as $record) {

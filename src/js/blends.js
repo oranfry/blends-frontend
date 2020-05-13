@@ -314,11 +314,6 @@
         });
     });
 
-    $('.recordaction_delete, .recordaction_unlink').on('click', function(e){
-        var $assoc = $(this).closest('.assoc');
-        $assoc.find('input, select').not(this).val(null);
-    });
-
     $('.trigger-edit-line').on('click', function(event){
         event.preventDefault();
         var $row = $(this).closest('tr');
@@ -498,13 +493,13 @@
             return;
         }
 
-        var query = '';
+        var parentspec = '';
 
         if (parent) {
-            query = '?&parent=' + parent;
+            parentspec = '/' + parent;
         }
 
-        $.ajax('/api/' + type + '/' + id + '/' + action + query, {
+        $.ajax('/api/' + type + '/' + id + '/' + action + parentspec, {
             method: 'post',
             data: {},
             success: function() {

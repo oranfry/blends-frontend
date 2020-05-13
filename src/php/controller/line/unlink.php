@@ -1,25 +1,16 @@
 <?php
 define('LAYOUT', 'json');
 
-if (!isset($_GET['parent'])) {
-    error_response('Parent not specified');
-}
-
-if (!preg_match('/^([a-z]+):([a-z]+)=([0-9][0-9]*)$/', $_GET['parent'])) {
-    error_response('Invalid parent specification');
-}
-
 $linetype = Linetype::load(LINETYPE_NAME);
 
-$lines = [
-    (object) [
-        'id' => LINE_ID,
-        'parent' => $_GET['parent'],
-    ]
-];
+@list($line) = $linetype->find_lines([(object)['field' => 'id', 'cmp' => '=', 'value' => LINE_ID]]);
 
-$result = $linetype->unlink($lines);
+if (!$line) {
+    return [
+        'data' => (object) [],
+    ];
+}
 
 return [
-    'data' => $result,
+    'data' => $linetype->unlink($line, PARNT),
 ];
