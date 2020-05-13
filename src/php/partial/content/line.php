@@ -7,17 +7,19 @@
                 foreach ($linetype->find_incoming_links() as $incoming) {
                     $tablelink = Tablelink::load($incoming->parent_link);
                     $side = @$incoming->reverse ? 1 : 0;
+                    $parentaliasshort = $incoming->parent_link . '_' . $incoming->parent_linetype;
 
-                    $field = (object) ['name' => $incoming->parent_link];
-                    $value = @$line->{$incoming->parent_link} ?: @$_GET[$field->name] ?: @$field->default;
+                    $field = (object) ['name' => $parentaliasshort];
+                    $value = @$line->{$parentaliasshort} ?: @$_GET[$field->name] ?: @$field->default;
+
 
                     $options = [];
-                    if (@$line->{$incoming->parent_link}) {
-                        $options[] = $line->{$incoming->parent_link};
+                    if (@$line->{$parentaliasshort}) {
+                        $options[] = $line->{$parentaliasshort};
                     }
                     ?>
                     <div class="form-row">
-                        <div class="form-row__label" title="<?= $incoming->parent_link ?>"><?= $incoming->parent_linetype ?></div>
+                        <div class="form-row__label" title="<?= $parentaliasshort ?>"><?= $parentaliasshort ?></div>
                         <div class="form-row__value">
                             <?php require APP_HOME . "/src/php/partial/fieldtype/text.php"; ?>
                         </div>
