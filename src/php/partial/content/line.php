@@ -19,7 +19,7 @@
                     }
                     ?>
                     <div class="form-row">
-                        <div class="form-row__label" title="<?= $parentaliasshort ?>"><?= $parentaliasshort ?></div>
+                        <div class="form-row__label" title="<?= $parentaliasshort ?>"><?= $incoming->parent_linetype ?></div>
                         <div class="form-row__value">
                             <?php require APP_HOME . "/src/php/partial/fieldtype/text.php"; ?>
                         </div>
@@ -71,7 +71,7 @@
             $fields = @$child->list_fields ?: $child_linetype->fields;
             $summaries = [$child->label => @$line->{"{$child->label}_summary"} ?: []];
             $tablelink = Tablelink::load($child->parent_link);
-            $parent_query = "{$linetype->name}=" . LINE_ID;
+            $parent_query = "{$child->parent_link}_{$linetype->name}=" . LINE_ID;
             $parent = "{$child->parent_link}:{$tablelink->ids[0]}=" . LINE_ID;
             $groupfield = 'group';
 
