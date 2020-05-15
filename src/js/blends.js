@@ -495,7 +495,7 @@
 
         var parentspec = '';
 
-        if (parent) {
+        if (action == 'unlink') {
             parentspec = '/' + parent;
         }
 
