@@ -427,7 +427,9 @@
         $('.navbar-placeholder').height($('.navbar').outerHeight() + 'px');
     };
 
-    $(window).on('resize', onResize);
+    var resizeTimer = null;
+
+    $(window).on('resize', function(){ clearTimeout(resizeTimer); resizeTimer = setTimeout(onResize, 300); });
 
     onResize();
 
