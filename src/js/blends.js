@@ -406,18 +406,18 @@
             $children.css({width: Math.ceil(max) + 'px', display: '', margin: '0 auto 1em auto'});
         });
 
-
         $('br + .navset').prev().remove();
+        $('.navset:not(:first-child)').removeClass('navset--nobar');
 
         var prevNavsetTop = null;
 
         $('.navset').each(function(){
             var navsetTop = $(this).offset().top;
-            var nobar = (navsetTop != prevNavsetTop);
+            var nobar = (prevNavsetTop == null || Math.abs(navsetTop - prevNavsetTop) > 10);
 
             $(this).toggleClass('navset--nobar', nobar);
 
-            if (prevNavsetTop !== null && navsetTop != prevNavsetTop) {
+            if (prevNavsetTop !== null && nobar) {
                 $('<br>').insertBefore($(this));
             }
 
