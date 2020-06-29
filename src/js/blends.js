@@ -169,7 +169,7 @@
         var form = $editForm[0];
         var data = {};
         var blend = $editForm.data('blend');
-        var $selected = $('tr[data-id].selected');
+        var $selected = getSelected();
         var query;
         var $fileInputs = $editForm.find('input[type="file"]');
 
@@ -331,7 +331,7 @@
             return;
         }
 
-        var $selected = $('tr[data-id].selected');
+        var $selected = getSelected();
         var query;
 
         if ($selected.length) {
@@ -355,8 +355,7 @@
     $('.trigger-bulk-print-lines').on('click', function(event)
     {
         event.preventDefault();
-
-        var $selected = $('tr[data-id].selected');
+        var $selected = getSelected();
         var query;
 
         if (!confirm('bulk print?')) {
@@ -597,15 +596,10 @@
     $('.repeater-select').on('change', repeaterChanged);
     repeaterChanged();
 
-    $('.easy-table tr').on('click', function(e){
+    $('.easy-table tr .selectall').on('click', function(e){
         var $table = $(this).closest('table');
         var $tbody = $(this).closest('tbody');
         var $block;
-
-        if ($(this).data('id')) {
-            $(this).toggleClass('selected');
-            return;
-        }
 
         if ($tbody.length) {
             $block = $tbody;
@@ -613,9 +607,20 @@
             $block = $table;
         }
 
-        var $trs = $block.find('tr[data-id]');
-        var selected = $trs.filter('.selected').length > 0;
-        $trs.toggleClass('selected', !selected);
+        var $boxes = $block.find('tr[data-id] .when-selecting input[type="checkbox"]');
+        var checked = $boxes.filter(':checked').length > 0;
+        $boxes.prop('checked', !checked);
+    });
+
+    $('.toggle-selecting').on('click', function(){
+        let $table = $(this).closest('.easy-table');
+        let selecting = $table.hasClass('selecting');
+
+        $table.toggleClass('selecting', !selecting);
+
+        if (!selecting) {
+            $table.find('.when-selecting input[type="checkbox"]').prop('checked', false);
+        }
     });
 
     function getJsonFromUrl(url)
@@ -741,6 +746,11 @@
         }).get();
 
         return 'selection=' + deepids.join(',');
+    }
+
+    function getSelected()
+    {
+        return $('tr[data-id] .when-selecting input[type="checkbox"]:checked').closest('tr[data-id]');
     }
 
     function changeInstance()
