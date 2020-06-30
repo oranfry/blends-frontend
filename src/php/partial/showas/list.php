@@ -16,7 +16,7 @@ $seen_today = !@$currentgroup || !$daterange || strcmp($currentgroup, $from) < 0
 <table class="easy-table">
     <thead>
         <tr>
-            <th class="when-selecting printhide" style="text-align: center"><i class="icon icon--smallsquare-o selectall"></i></td></th>
+            <th class="when-selecting printhide"><i class="icon icon--smallsquare-o selectall"></i></td></th>
             <?php foreach ($fields as $field): ?>
                 <th class="<?= $field->type == 'number' ? 'right' : '' ?> <?= @$field->sacrifice ? 'sacrifice' : '' ?>"><?= !@$field->supress_header && @$field->type != 'icon' ? $field->name : '' ?></th>
             <?php endforeach ?>
@@ -77,7 +77,7 @@ $seen_today = !@$currentgroup || !$daterange || strcmp($currentgroup, $from) < 0
                     <?php endif ?>
 
                     <tr class="<?= strcmp($record->{$groupfield}, @$currentgroup) ? '' : 'today' ?>">
-                        <td class="when-selecting printhide" style="text-align: center"><i class="icon icon--smallsquare-o selectall"></i></td>
+                        <td class="when-selecting printhide"><i class="icon icon--smallsquare-o selectall"></i></td>
                         <?php
                             $grouptitle = $record->{$groupfield};
                             if ($daterange) {
