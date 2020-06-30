@@ -266,6 +266,11 @@ th.right, td.right {
     padding: 0;
 }
 
+.easy-table tr td,
+.easy-table tr th {
+    line-height: 1.8em;
+}
+
 .easy-table tr.broken td {
     background-color: #ffcdcd;
 }
@@ -772,6 +777,11 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .when-selecting {
     text-align: center;
+}
+
+.when-selecting input {
+    margin: 0;
+    padding: 0;
 }
 
 .easy-table:not(.selecting) .when-selecting {
