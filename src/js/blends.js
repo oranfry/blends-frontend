@@ -610,17 +610,28 @@
         var $boxes = $block.find('tr[data-id] .when-selecting input[type="checkbox"]');
         var checked = $boxes.filter(':checked').length > 0;
         $boxes.prop('checked', !checked);
+        $boxes.each(function(){
+            $(this).closest('tr[data-id]').toggleClass('selected', $(this).is(':checked'));
+        });
     });
 
     $('.toggle-selecting').on('click', function(){
         let $table = $(this).closest('.easy-table');
         let selecting = $table.hasClass('selecting');
+        selecting = !selecting;
 
-        $table.toggleClass('selecting', !selecting);
+        $table.toggleClass('selecting', selecting);
 
         if (!selecting) {
-            $table.find('.when-selecting input[type="checkbox"]').prop('checked', false);
+            $table.find('.when-selecting input[type="checkbox"]').prop('checked', false).each(function(){
+                console.log(this);
+                $(this).closest('tr[data-id]').removeClass('selected');
+            });
         }
+    });
+
+    $('.when-selecting input').on('change', function(){
+        $(this).closest('tr[data-id]').toggleClass('selected', $(this).is(':checked'));
     });
 
     function getJsonFromUrl(url)

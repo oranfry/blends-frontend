@@ -9,7 +9,6 @@
             .appcolor-bg,
             .button.button--main,
             nav a.current,
-            .easy-table tr.selected td,
             td.today,
             tr.today td,
             .periodchoice.periodchoice--current,
