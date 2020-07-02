@@ -223,7 +223,8 @@ if (count($blend->showass) > 1) {
 }
 
 $graphfield = @$blend->graphfield;
-$datefieldwhichisgroupfield = @filter_objects(@filter_objects($all_fields, 'name', 'is', $groupfield), 'type', 'is', 'date')[0];
+$datefield = @filter_objects($all_fields, 'type', 'is', 'date')[0];
+$datefieldwhichisgroupfield = $datefield->name == $groupfield ? $datefield : null;
 
 if ($datefieldwhichisgroupfield) {
     $currentgroup = date('Y-m-d');
@@ -257,4 +258,5 @@ return [
     'graphfield' => $graphfield,
     'summaries' => @$summaries,
     'prepop' => $prepop,
+    'datefield' => $datefield,
 ];

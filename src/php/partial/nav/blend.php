@@ -97,7 +97,7 @@ $adhocfilters = ContextVariableSet::get('adhocfilters');
             <div class="form-row" data-repeaters="day">
                 <div class="form-row__label">Peg Date</div>
                 <div class="form-row__value">
-                    <input class="cv-surrogate no-autosubmit" data-for="<?= $repeater->prefix ?>__pegdate" type="text" value="<?= $repeater->pegdate ?>" style="width: 7em">
+                    <input class="cv-surrogate no-autosubmit" data-for="<?= $repeater->prefix ?>__pegdate" type="text" value="<?= $repeater->pegdate ?>" style="width: 7em"><span class="button fromtoday">&bull;</span>
                 </div>
                 <div style="clear: both"></div>
             </div>
@@ -160,5 +160,7 @@ $adhocfilters = ContextVariableSet::get('adhocfilters');
             </div>
         </div>
     </div>
-    <div class="inline-modal-trigger drnav <?= $repeater->period ? 'current' : '' ?>"><i class="icon icon--repeat"></i></div>
+    <?php if (@$datefield): ?>
+        <div class="inline-modal-trigger drnav <?= $repeater->period ? 'current' : '' ?>"><i class="icon icon--repeat"></i></div>
+    <?php endif ?>
 </div>

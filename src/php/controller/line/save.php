@@ -15,6 +15,7 @@ if (!defined('BULK_ADD') && LINE_ID) {
 foreach ($linetype->fields as $field) {
     if ($field->type == 'date') {
         $datefield = $field;
+        break; //use the first
     }
 }
 
