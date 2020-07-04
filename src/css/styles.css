@@ -230,7 +230,7 @@ td, th {
     padding: 0.2em;
 }
 
-th:first-child, td:first-child, td.first-child {
+th:nth-child(2), td:nth-child(2), td.first-child, .when-selecting {
     padding-left: 0.5em;
 }
 
