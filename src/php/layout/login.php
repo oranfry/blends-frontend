@@ -1,21 +1,3 @@
-<?php
-if (@$_POST['auth'] == Config::get()->password) {
-    $_SESSION['AUTH'] = Config::get()->password;
-}
-
-if (@$_SESSION["AUTH"] == Config::get()->password) {
-    $nav = Config::get()->nav;
-    $nav0 = array_keys($nav)[0];
-    $blend = is_string($nav0) ? $nav[$nav0][0] : $nav[0];
-
-    header("Location: /blend/{$blend}");
-    die('Redirecting...');
-}
-
-if (isset($_POST['auth'])) {
-    $message = "Incorrect auth key";
-}
-?>
 <!DOCTYPE html>
 <html style="height: 100%; text-align: center; margin: 0">
 <head>
@@ -39,11 +21,15 @@ if (isset($_POST['auth'])) {
                             <div style="display: inline-block; text-align: left; margin: 1em 0">
                             <h1 class="desktop-only"><?= Config::get()->instance_name ?: 'Blends' ?></h1>
                                 <div class="cred-line">
-                                    <p>Auth Key</p>
-                                    <input type="password" name="auth" id="auth" autocomplete="off">
+                                    <p>Username</p>
+                                    <input type="text" name="username" id="auth" autocomplete="off" value="<?= @$username ?>">
                                 </div>
                                 <div class="cred-line">
-                                    <input type="submit" value="Proceed">
+                                    <p>Password</p>
+                                    <input type="password" name="password">
+                                </div>
+                                <div class="cred-line">
+                                    <input type="submit" value="Sign In">
                                 </div>
 
                                 <?php if (isset($message) && $message): ?>
@@ -58,6 +44,6 @@ if (isset($_POST['auth'])) {
         </div>
     </div>
 
-    <script>document.getElementById('auth').focus();</script>
+    <script>document.getElementById('username').focus();</script>
 </body>
 </html>

@@ -4,10 +4,12 @@ namespace blendsfrontend;
 class Router extends \Router
 {
     protected static $routes = [
+        'GET /' => ['PAGE' => 'login'],
         'GET /([a-z]+)' => ['LINETYPE_NAME', 'LINE_ID' =>  null, 'PAGE' => 'line'],
         'GET /([a-z]+)/([0-9]+)' => ['LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line'],
         'GET /blend/([a-z]+)' => ['BLEND_NAME', 'PAGE' => 'blend'],
         'GET /download/(.*)' => ['FILE', 'PAGE' => 'download'],
+        'POST /' => ['PAGE' => 'login'],
         'POST /([a-z]+)/([0-9]+)/print' => ['LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line/print'],
         'POST /([a-z]+)/([0-9]+)/save' => ['LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line/save'],
         'POST /([a-z]+)/save' => ['LINETYPE_NAME', 'LINE_ID' => null, 'PAGE' => 'line/save'],
