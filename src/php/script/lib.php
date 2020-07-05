@@ -410,3 +410,10 @@ function get_repeater_dates($repeater, $from, $to)
 
     return $dates;
 }
+
+function doover()
+{
+    unset($_SESSION['AUTH']);
+    header('Location: /');
+    die();
+}
