@@ -9,6 +9,7 @@ class Router extends \Router
         'GET /([a-z]+)/([0-9]+)' => ['LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line'],
         'GET /blend/([a-z]+)' => ['BLEND_NAME', 'PAGE' => 'blend'],
         'GET /download/(.*)' => ['FILE', 'PAGE' => 'download'],
+        'POST /logout' => ['PAGE' => 'logout'],
         'POST /' => ['PAGE' => 'login'],
         'POST /([a-z]+)/([0-9]+)/print' => ['LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line/print'],
         'POST /([a-z]+)/([0-9]+)/save' => ['LINETYPE_NAME', 'LINE_ID', 'PAGE' => 'line/save'],

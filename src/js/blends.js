@@ -776,4 +776,13 @@
 
         window.location.href = link;
     }
+
+    $('.trigger-logout').on('click', function(){
+        if (!confirm('Logout?')) {
+            return;
+        }
+
+        $('<form action="/logout" method="post" id="logout">').appendTo($('body')).submit();
+    });
+
 })();

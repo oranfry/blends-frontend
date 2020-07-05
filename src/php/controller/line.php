@@ -6,13 +6,13 @@ $parentlink = null;
 $parentid = null;
 
 if (LINE_ID) {
-    $line = @$linetype->find_lines([(object)['field' => 'id', 'value' => LINE_ID]])[0];
+    $line = @$linetype->find_lines($_SESSION['AUTH'], [(object)['field' => 'id', 'value' => LINE_ID]])[0];
 
     if (!$line) {
         error_response('No such line', 400);
     }
 
-    $linetype->load_children($line);
+    $linetype->load_children($_SESSION['AUTH'], $line);
 }
 
 $suggested_values = $linetype->get_suggested_values();
