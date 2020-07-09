@@ -1,6 +1,6 @@
 <div class="navbar-placeholder" style="height: 2.5em;">&nbsp;</div>
 <div class="instances navbar printhide">
-    <form id="instanceform" action="/change-instances" method="post">
+    <form id="instanceform">
         <div>
             <?php if (BACK): ?><a class="sidebar-backlink" href="<?= BACK ?>">Back</a></a><?php endif ?>
             <?php if (defined('BLEND_NAME')): ?>
@@ -85,6 +85,7 @@
                 ?>
             <?php endif ?>
             <?php @include APP_HOME . '/src/php/partial/nav/' . PAGE . '.php'; ?>
+            <div class="navset"><i class="icon icon--leave trigger-logout"></i></div>
             <input type="hidden" name="_returnurl" value="<?= htmlspecialchars_decode($_SERVER['REQUEST_URI']) ?>">
             <div id="new-vars-here" style="display: none"></div>
         </div>

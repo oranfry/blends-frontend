@@ -45,5 +45,5 @@ foreach ($dates as $date) {
 }
 
 return [
-    'data' => $linetype->save($lines),
+    'data' => $linetype->save($_SESSION['AUTH'], $lines),
 ];

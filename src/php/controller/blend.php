@@ -113,7 +113,11 @@ foreach ($fields as $field) {
     }
 }
 
-$records = $blend->search($filters);
+$records = $blend->search($_SESSION['AUTH'], $filters);
+
+if ($records === false) {
+    doover();
+}
 
 foreach ($records as $record) {
     foreach ($all_fields as $field) {
@@ -170,7 +174,12 @@ if (count(filter_objects($fields, 'summary', 'is', 'sum'))) {
 
     if ($blend->past && @$daterange && $daterange->from) {
         $summary_filters = array_merge(@$blend->filters ?? [], get_past_filters($all_fields));
-        $past_summary = $blend->summary($summary_filters);
+        $past_summary = $blend->summary($_SESSION['AUTH'], $summary_filters);
+
+        if ($past_summary === false) {
+            doover();
+        }
+
         $summaries = [
             'initial' => $past_summary,
         ];
