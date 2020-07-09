@@ -3,7 +3,7 @@ define('LAYOUT', 'json');
 
 $linetype = Linetype::load(LINETYPE_NAME);
 
-@list($line) = $linetype->find_lines([(object)['field' => 'id', 'cmp' => '=', 'value' => LINE_ID]]);
+@list($line) = $linetype->find_lines($_SESSION['AUTH'], [(object)['field' => 'id', 'cmp' => '=', 'value' => LINE_ID]]);
 
 if (!$line) {
     return [

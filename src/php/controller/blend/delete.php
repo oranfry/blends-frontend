@@ -17,7 +17,7 @@ if (@$_GET['selection']) {
     $filters = get_current_filters($blend->fields);
 }
 
-$result = $blend->delete($filters);
+$result = $blend->delete($_SESSION['AUTH'], $filters);
 
 return [
     'data' => $result,

@@ -18,7 +18,7 @@ if (@$_GET['selection']) {
     $filters = get_current_filters($blend->fields);
 }
 
-$result = $blend->update($filters, $data);
+$result = $blend->update($_SESSION['AUTH'], $filters, $data);
 
 return [
     'data' => $result,
