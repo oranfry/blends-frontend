@@ -35,6 +35,8 @@
         }
     ?>
     <script><?php
+        echo "window.username = '" . Blends::token_username($_SESSION['AUTH']) . "';";
+
         foreach (PAGE_PARAMS as $key => $value) {
             echo "window.{$key} = '{$value}'; ";
         }
