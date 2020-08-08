@@ -85,7 +85,7 @@
                 ?>
             <?php endif ?>
             <?php @include APP_HOME . '/src/php/partial/nav/' . PAGE . '.php'; ?>
-            <div class="navset"><i class="icon icon--leave trigger-logout"></i></div>
+            <div class="navset"><i class="icon icon--leave trigger-logout" title="Logout <?= Blends::token_username($_SESSION['AUTH']) ?>"></i></div>
             <input type="hidden" name="_returnurl" value="<?= htmlspecialchars_decode($_SERVER['REQUEST_URI']) ?>">
             <div id="new-vars-here" style="display: none"></div>
         </div>

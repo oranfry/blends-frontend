@@ -778,7 +778,7 @@
     }
 
     $('.trigger-logout').on('click', function(){
-        if (!confirm('Logout?')) {
+        if (!confirm('Logout ' + username + '?')) {
             return;
         }
 

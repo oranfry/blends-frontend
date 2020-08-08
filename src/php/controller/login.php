@@ -18,7 +18,7 @@ if (@$_SESSION['AUTH']) {
     die('Redirecting...');
 }
 
-if (@$_POST['password'] && @$_POST['username']) {
+if (isset($_POST['password']) && isset($_POST['username'])) {
     $message = "Incorrect username or password";
 }
 
