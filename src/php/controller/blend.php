@@ -23,7 +23,7 @@ $types = array_values(
     array_filter(
         $blend->linetypes,
         function ($v) use ($blend) {
-            return !@$blend->hide_types || !in_array($v, array_keys($blend->hide_types));
+            return !@$blend->hide_types || !in_array($v, array_keys($blend->hide_types)) || !in_array($blend->hide_types[$v], $blend->linetypes);
         }
     )
 );
