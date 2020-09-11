@@ -143,9 +143,10 @@ td > .icon, td > a > .icon {
 
 /* general input styles */
 
-input, select, button, .textbox, .button {
+input, select, button, textarea, .textbox, .button {
     display: inline-block;
     appearance: none;
+    -moz-appearance: none;
     border: 1px solid #ccc;
     box-sizing: border-box;
     padding: 0 0.3em;
@@ -155,6 +156,13 @@ input, select, button, .textbox, .button {
     font-size: 1em;
     line-height: 1.2em;
     text-decoration: none;
+}
+
+input[type="checkbox"] {
+    width: 12px;
+    height: 12px;
+    background-size: contain;
+    filter: grayscale(100%);
 }
 
 .button {

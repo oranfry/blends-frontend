@@ -20,4 +20,6 @@ with_plugins(function($pdir, $name) use ($latests){
     }
 
     closedir($handle);
+    
+    echo "input[type=\"checkbox\"]:checked { background-image: url(/img/icon/tick.{$latests['icon']}.png); }\n";
 });
