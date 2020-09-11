@@ -12,5 +12,5 @@ if (!$line) {
 }
 
 return [
-    'data' => $linetype->unlink($line, PARNT),
+    'data' => $linetype->unlink($_SESSION['AUTH'], $line, PARNT),
 ];
