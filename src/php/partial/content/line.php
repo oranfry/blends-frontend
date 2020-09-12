@@ -8,7 +8,7 @@
                     <div class="form-row__label">user</div>
                     <div class="form-row__value">
                         <?php $field = (object) ['name' => 'user'] ?>
-                        <?php $value = @$line->user; ?>
+                        <?php $value = @$line->user ?? @$_GET['user']; ?>
                         <?php require APP_HOME . "/src/php/partial/fieldtype/text.php"; ?>
                     </div>
                     <div style="clear: both"></div>
