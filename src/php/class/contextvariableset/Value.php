@@ -17,20 +17,32 @@ class Value extends \ContextVariableSet
 
     public function display()
     {
+        $label = $this->value;
+
+        if ($this->options) {
+            $option_lookup = array_flip($this->options);
+
+            if (isset($option_lookup[$this->value])) {
+                $label = $option_lookup[$this->value];
+            }
+        }
+
+        $label = $label ?: preg_replace('/.*_/', '', $this->prefix);
+
         ?><div class="navset">
             <input class="cv" name="<?= $this->prefix ?>__value" placeholder="<?= $this->prefix ?>" value="<?= $this->value ?>" style="display: none">
             <div class="inline-modal">
                 <div class="nav-dropdown">
                     <a class="cv-manip <?= $this->value ? '' : 'current' ?>" data-manips="<?= $this->prefix ?>__value=">-</a>
                     <?php if ($this->options): ?>
-                        <?php foreach ($this->options as $option): ?>
-                            <a class="cv-manip <?= $this->value == $option ? 'current' : ''?>" data-manips="<?= $this->prefix ?>__value=<?= $option ?>"><?= $option ?></a>
+                        <?php foreach ($this->options as $index => $option): ?>
+                            <a class="cv-manip <?= $this->value == $option ? 'current' : ''?>" data-manips="<?= $this->prefix ?>__value=<?= $option ?>"><?= !is_numeric($index) ? $index : $option ?></a>
                         <?php endforeach ?>
                     <?php else: ?>
                     <?php endif ?>
                 </div>
             </div>
-            <span class="inline-modal-trigger"><?= $this->value ?: preg_replace('/.*_/', '', $this->prefix) ?></span>
+            <span class="inline-modal-trigger"><?= $label ?></span>
         </div><?php
     }
 }
