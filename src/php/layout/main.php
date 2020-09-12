@@ -34,19 +34,26 @@
             $active->enddisplay();
         }
     ?>
-    <script><?php
-        echo "window.username = '" . Blends::token_username($_SESSION['AUTH']) . "';";
 
-        foreach (PAGE_PARAMS as $key => $value) {
-            echo "window.{$key} = '{$value}'; ";
-        }
+    <script>
+        <?php $username = Blends::token_username($_SESSION['AUTH']); ?>
+        <?= "window.username = '{$username}';"; ?>
 
-        if (BACK) {
-            echo "var back = '" . BACK . "';";
-        }
-        ?></script>
+        <?php $user = Blends::token_user($_SESSION['AUTH']); ?>
+        <?= 'window.user = ' . ($user ? "'{$user}'" : 'null') . ";"; ?>
+
+        <?php foreach (PAGE_PARAMS as $key => $value): ?>
+            <?= "window.{$key} = '{$value}';"; ?>
+
+        <?php endforeach ?>
+
+        <?php if (BACK): ?>
+            <?= "var back = '" . BACK . "';"; ?>
+
+        <?php endif ?>
+    </script>
     <?php @include APP_HOME . '/src/php/partial/js/' . PAGE . '.php'; ?>
     <script type="text/javascript" src="/js/app.<?= latest('js') ?>.js"></script>
-    <!--<i class="icon icon- -tick" style="position: fixed; top: 0.5em; right: 0.5em; z-index: 99999999999"></i>-->
+    <!-- <i class="icon icon--tick" style="position: fixed; top: 0.5em; right: 0.5em; z-index: 99999999999"></i> -->
 </body>
 </html>
