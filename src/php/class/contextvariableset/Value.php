@@ -22,7 +22,7 @@ class Value extends \ContextVariableSet
         if ($this->options) {
             $option_lookup = array_flip($this->options);
 
-            if (isset($option_lookup[$this->value])) {
+            if (isset($option_lookup[$this->value]) && is_string($option_lookup[$this->value])) {
                 $label = $option_lookup[$this->value];
             }
         }
