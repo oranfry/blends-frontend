@@ -19,14 +19,15 @@ unset($_blend);
 $blend = $blend_lookup[BLEND_NAME];
 $all_fields = $blend->fields;
 
-$types = array_values(
-    array_filter(
-        $blend->linetypes,
-        function ($v) use ($blend) {
-            return !@$blend->hide_types || !in_array($v, array_keys($blend->hide_types)) || !in_array($blend->hide_types[$v], $blend->linetypes);
-        }
-    )
-);
+$types = [];
+
+foreach ($blend->linetypes as $linetype) {
+    if (@$blend->hide_types[$linetype]) {
+        $types[] = $blend->hide_types[$linetype];
+    } elseif ($index = array_search($linetype, $blend->hide_types) === false || is_string($index)) {
+        $types[] = $linetype;
+    }
+}
 
 $linetypes = array_map(function($v){
     return Linetype::load($v);
