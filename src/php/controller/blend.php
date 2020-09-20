@@ -165,10 +165,6 @@ if ($groupfield) {
     }
 }
 
-if ($blend->cum_toggle && !@$cum) {
-    activate_contextvariableset('boolean', 'cum_summaries', 'cumulative');
-}
-
 if (count(filter_objects($fields, 'summary', 'is', 'sum'))) {
     $balances = [];
     $summaries = [];
