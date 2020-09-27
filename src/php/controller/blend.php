@@ -24,7 +24,7 @@ $types = [];
 foreach ($blend->linetypes as $linetype) {
     if (@$blend->hide_types[$linetype]) {
         $types[] = $blend->hide_types[$linetype];
-    } elseif ($index = array_search($linetype, $blend->hide_types) === false || is_string($index)) {
+    } elseif (!@$blend->hide_types || $index = array_search($linetype, $blend->hide_types) === false || is_string($index)) {
         $types[] = $linetype;
     }
 }
