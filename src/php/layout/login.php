@@ -44,6 +44,6 @@
         </div>
     </div>
 
-    <script>document.getElementById('username').focus();</script>
+    <script>document.getElementById('auth').focus();</script>
 </body>
 </html>
