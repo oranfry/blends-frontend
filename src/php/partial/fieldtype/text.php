@@ -1,4 +1,4 @@
-<?php if ($options): ?>
+<?php if (@$options): ?>
     <select name="<?= $field->name ?>" style="width: 80%" tabindex="1">
         <?php if (!@$field->constrained || count($options) > 1): ?><option></option><?php endif ?>
         <?php foreach ($options as $k => $v): ?>
