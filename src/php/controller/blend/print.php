@@ -1,7 +1,7 @@
 <?php
 define('LAYOUT', 'json');
 
-$blend = Blend::load(BLEND_NAME);
+$blend = Blend::load(@$_SESSION['AUTH'], BLEND_NAME);
 
 if (@$_GET['selection']) {
     $filters = [

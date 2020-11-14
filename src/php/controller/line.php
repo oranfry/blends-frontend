@@ -1,5 +1,5 @@
 <?php
-$linetype = Linetype::load(LINETYPE_NAME);
+$linetype = Linetype::load(@$_SESSION['AUTH'], LINETYPE_NAME);
 
 $parenttype = null;
 $parentlink = null;
@@ -15,7 +15,7 @@ if (LINE_ID) {
     $linetype->load_children($_SESSION['AUTH'], $line);
 }
 
-$suggested_values = $linetype->get_suggested_values();
+$suggested_values = $linetype->get_suggested_values(@$_SESSION['AUTH']);
 
 $hasFileFields = in_array('file', array_map(function ($f) {
     return $f->type;

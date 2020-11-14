@@ -15,7 +15,7 @@
                 </div>
             <?php endif ?>
             <?php
-                foreach ($linetype->find_incoming_links() as $incoming) {
+                foreach ($linetype->find_incoming_links($_SESSION['AUTH']) as $incoming) {
                     $parentaliasshort = $incoming->parent_link . '_' . $incoming->parent_linetype;
 
                     $field = (object) ['name' => $parentaliasshort];
@@ -74,7 +74,7 @@
     </div>
     <?php
         foreach (@$linetype->children ?: [] as $child) {
-            $child_linetype = Linetype::load($child->linetype);
+            $child_linetype = Linetype::load(@$_SESSION['AUTH'], $child->linetype);
             $records = $line->{$child->label};
             $types = [$child_linetype->name];
             $fields = @$child->list_fields ?: $child_linetype->fields;

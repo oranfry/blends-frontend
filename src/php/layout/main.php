@@ -4,7 +4,7 @@
         <meta name="viewport" content="width=320, initial-scale=1, user-scalable=no">
         <link rel="stylesheet" type="text/css" href="/css/styles.<?= latest('css') ?>.css">
         <meta charset="utf-8"/>
-        <title><?= Config::get()->instance_name ?: 'Blends' ?></title>
+        <title><?= BlendsConfig::get(@$_SESSION['AUTH'])->instance_name ?: 'Blends' ?></title>
         <style>
             .appcolor-bg,
             .button.button--main,

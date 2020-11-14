@@ -1,5 +1,6 @@
 <?php
 $message = null;
+@$_SESSION['AUTH'] = null;
 
 if (@$_POST['password'] && @$_POST['username']) {
     $token = Blends::login($_POST['username'], $_POST['password']);
@@ -10,7 +11,7 @@ if (@$_POST['password'] && @$_POST['username']) {
 }
 
 if (@$_SESSION['AUTH']) {
-    $nav = Config::get()->nav;
+    $nav = BlendsConfig::get($_SESSION['AUTH'])->nav;
     $nav0 = array_keys($nav)[0];
     $blend = is_string($nav0) ? $nav[$nav0][0] : $nav[0];
 

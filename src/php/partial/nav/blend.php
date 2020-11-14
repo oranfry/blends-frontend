@@ -15,7 +15,7 @@ $adhocfilters = ContextVariableSet::get('adhocfilters');
                 <div class="nav-dropdown" style="padding: 0.5em">
                     <nav>
                         <?php foreach ($types as $_type): ?>
-                            <i class="icon icon--<?= Linetype::load($_type)->icon ?> modal-trigger" data-for="bulk-add-modal_<?= $_type ?>"></i>
+                            <i class="icon icon--<?= Linetype::load(@$_SESSION['AUTH'], $_type)->icon ?> modal-trigger" data-for="bulk-add-modal_<?= $_type ?>"></i>
                         <?php endforeach ?>
                     </nav>
                 </div>

@@ -13,7 +13,7 @@ define('CONTEXT', @$_GET['context'] ?: 'default');
 define('REFCOL', 'd8b0b0');
 define('MAX_COLUMN_WIDTH', 25);
 define('BACK', @$_GET['back'] ? base64_decode($_GET['back']) : null);
-set_highlight(@Config::get()->highlight ?: REFCOL);
+set_highlight(@BlendsConfig::get(@$_SESSION['AUTH'])->highlight ?: REFCOL);
 
 session_start();
 

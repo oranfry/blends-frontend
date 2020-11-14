@@ -8,8 +8,8 @@ use contextvariableset\Showas;
 $blends = [];
 $blend_lookup = [];
 
-foreach (array_keys(Config::get()->blends) as $name) {
-    $_blend = Blend::load($name);
+foreach (array_keys(BlendsConfig::get(@$_SESSION['AUTH'])->blends) as $name) {
+    $_blend = Blend::load(@$_SESSION['AUTH'], $name);
     $blends[] = $_blend;
     $blend_lookup[$name] = $_blend;
 }
@@ -30,7 +30,7 @@ foreach ($blend->linetypes as $linetype) {
 }
 
 $linetypes = array_map(function($v){
-    return Linetype::load($v);
+    return Linetype::load(@$_SESSION['AUTH'], $v);
 }, $blend->linetypes);
 
 $classes = filter_objects($all_fields, 'type', 'is', 'class');
@@ -77,8 +77,14 @@ foreach ($all_fields as $field) {
         $cvs = new Value(BLEND_NAME . "_{$field->name}");
         $cvs->label = $field->name;
 
-        if (@$field->filteroptions) {
-            $cvs->options = method_exists($field, 'filteroptions') ? $field->filteroptions() : $field->filteroptions;
+        if (property_exists($field, 'filteroptions')) {
+            if (is_array($field->filteroptions)) {
+                $cvs->options = $field->filteroptions;
+            } elseif (is_callable($field->filteroptions)) {
+                $cvs->options = ($field->filteroptions)(@$_SESSION['AUTH']);
+            } else {
+                error_response('filteroptions should be an array or a closure');
+            }
         }
 
         ContextVariableSet::put($field->name, $cvs);
@@ -114,7 +120,7 @@ foreach ($fields as $field) {
     }
 }
 
-$records = $blend->search($_SESSION['AUTH'], $filters);
+$records = $blend->search(@$_SESSION['AUTH'], $filters);
 
 if ($records === false) {
     doover();

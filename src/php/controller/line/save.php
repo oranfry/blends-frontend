@@ -4,7 +4,7 @@ use contextvariableset\Daterange;
 
 define('LAYOUT', 'json');
 
-$linetype = Linetype::load(LINETYPE_NAME);
+$linetype = Linetype::load(@$_SESSION['AUTH'], LINETYPE_NAME);
 $line_template =  json_decode(file_get_contents('php://input'));
 $datefield = null;
 

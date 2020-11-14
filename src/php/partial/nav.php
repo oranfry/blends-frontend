@@ -4,7 +4,7 @@
         <div>
             <?php if (BACK): ?><a class="sidebar-backlink" href="<?= BACK ?>">Back</a></a><?php endif ?>
             <?php if (defined('BLEND_NAME')): ?>
-                <?php $nav = @Config::get()->nav ?? []; ?>
+                <?php $nav = @BlendsConfig::get(@$_SESSION['AUTH'])->nav ?? []; ?>
                 <?php if (count($nav) > 1): ?>
                     <?php
                         $query = implode('&', array_map(function($v, $k) { return "{$k}={$v}"; }, $_GET, array_keys($_GET)));
@@ -73,7 +73,7 @@
                                     ?>
                                 </div>
                             </div>
-                            <span class="inline-modal-trigger"><?= @Blend::load(BLEND_NAME)->label ?? BLEND_NAME ?></span>
+                            <span class="inline-modal-trigger"><?= @Blend::load(@$_SESSION['AUTH'], BLEND_NAME)->label ?? BLEND_NAME ?></span>
                         </div>
                     <?php endif ?>
                 <?php endif ?>

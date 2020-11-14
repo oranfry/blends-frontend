@@ -1,7 +1,7 @@
 <?php
 define('LAYOUT', 'json');
 
-$linetype = Linetype::load(LINETYPE_NAME);
+$linetype = Linetype::load(@$_SESSION['AUTH'], LINETYPE_NAME);
 
 @list($line) = $linetype->find_lines($_SESSION['AUTH'], [(object)['field' => 'id', 'cmp' => '=', 'value' => LINE_ID]]);
 
