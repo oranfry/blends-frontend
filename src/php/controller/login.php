@@ -1,6 +1,5 @@
 <?php
 $message = null;
-@$_SESSION['AUTH'] = null;
 
 if (@$_POST['password'] && @$_POST['username']) {
     $token = Blends::login($_POST['username'], $_POST['password']);
