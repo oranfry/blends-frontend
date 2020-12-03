@@ -10,25 +10,20 @@ $adhocfilters = ContextVariableSet::get('adhocfilters');
     <div class="only-super1200 nav-title">Bulk</div>
     <i class="icon icon--edit modal-trigger" data-for="bulk-edit-modal"></i>
     <i class="icon icon--times trigger-bulk-delete-lines" data-blend="<?= BLEND_NAME ?>"></i>
+    <?php if ($repeater->period && count($types) == 1): ?><i class="icon icon--mono icon--plus modal-trigger" data-for="bulk-add-modal_<?= $types[0] ?>"></i><?php endif ?>
     <?php if (@$blend->printable): ?><i class="icon icon--printer trigger-bulk-print-lines" data-blend="<?= BLEND_NAME ?>"></i><?php endif ?>
-
-    <?php if ($repeater->period): ?>
-        <br class="only-super1200">
-        <br class="only-super1200">
+</div>
+<?php if ($repeater->period && count($types) > 1): ?>
+    <div class="navset">
         <div class="only-super1200 nav-title">Bulk Add</div>
         <div class="inline-rel">
-            <?php if (count($types) > 1): ?>
-                <div class="nav-modal">
-                    <div class="nav-dropdown"><?php foreach ($types as $_type): ?><a href="#"><i class="icon icon--<?= Linetype::load(@$_SESSION['AUTH'], $_type)->icon ?> modal-trigger" data-for="bulk-add-modal_<?= $_type ?>"></i></a><?php endforeach ?></div>
-                </div>
-                <i class="nav-modal-trigger icon icon--mono icon--plus only-sub1200"></i>
-            <?php else: ?>
-                <i class="icon icon--mono icon--plus modal-trigger only-sub1200" data-for="bulk-add-modal_<?= $types[0] ?>"></i>
-            <?php endif ?>
+            <div class="nav-modal">
+                <div class="nav-dropdown"><?php foreach ($types as $_type): ?><a href="#"><i class="icon icon--<?= Linetype::load(@$_SESSION['AUTH'], $_type)->icon ?> modal-trigger" data-for="bulk-add-modal_<?= $_type ?>"></i></a><?php endforeach ?></div>
+            </div>
+            <i class="nav-modal-trigger icon icon--mono icon--plus only-sub1200"></i>
         </div>
-    <?php endif ?>
-
-</div>
+    </div>
+<?php endif ?>
 
 <div class="navset">
     <div class="nav-title">Filters</div>
