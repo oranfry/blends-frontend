@@ -17,6 +17,19 @@ set_highlight(@BlendsConfig::get(@$_SESSION['AUTH'])->highlight ?: REFCOL);
 
 session_start();
 
+function init_app()
+{
+    if (
+        @$_SESSION["AUTH"]
+        &&
+        !preg_match(',^/$,', $_SERVER['REQUEST_URI'])
+        &&
+        !Blends::verify_token($_SESSION['AUTH'])
+    ) {
+        doover();
+    }
+}
+
 function get_current_filters($fields)
 {
     $filters = [];
