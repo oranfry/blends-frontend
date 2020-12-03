@@ -405,7 +405,7 @@
                 max = Math.max(max, $(this).outerWidth());
             });
 
-            $children.css({width: Math.ceil(max) + 'px', display: '', margin: '0 auto 1em auto'});
+            $children.css({width: Math.ceil(max) + 'px', display: ''});
         });
 
         $('br + .navset').prev().remove();
