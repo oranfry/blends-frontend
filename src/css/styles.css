@@ -769,6 +769,16 @@ input[type="number"]::-webkit-inner-spin-button {
     display: inline;
 }
 
+.navbar {
+    background: #e7e7e7;
+    padding: 0.5em;
+    top: 0;
+    position: fixed;
+    margin: 0;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
 .nav-dropdown--spacey {
     margin: 1em;
 }
@@ -946,14 +956,8 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 
     .navbar {
-        margin: 0;
-        top: 0;
-        position: fixed;
-        padding: 0.5em;
-        background: #ccc;
         width: 100%;
-        box-sizing: border-box;
-        z-index: 1000;
+        border-bottom: 1px solid #ccc;
     }
 
     .nav-dropdown > a, .nav-dropdown .nav-dropdown__item {
@@ -1016,19 +1020,12 @@ input[type="number"]::-webkit-inner-spin-button {
 
     .navbar {
         font-size: 1.1em;
-        margin: 0;
-        top: 0;
         bottom: 0;
         left: 0;
-        position: fixed;
         text-align: left;
-        padding: 0.5em;
-        background: #e7e7e7;
-        border-right: 1px solid #d7d7d7;
+        border-right: 1px solid #ccc;
         width: 250px;
-        box-sizing: border-box;
-        z-index: 1000;
-        overflow-y: auto;
+        overflow-x: visible;
     }
 
     .nav-dropdown a {
