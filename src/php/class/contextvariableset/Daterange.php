@@ -71,7 +71,7 @@ class Daterange extends \ContextVariableSet
             <div class="navset">
                 <div class="inline-rel">
                     <div class="inline-modal">
-                        <div class="nav-dropdown">
+                        <div class="nav-dropdown nav-dropdown--always">
                              <?php foreach (BlendsConfig::get(@$_SESSION['AUTH'])->periods as $period): ?>
                                 <?php $current = (!$this->rawto && $period == $this->period); ?>
                                 <a class="<?= $current ? 'current' : '' ?>" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['period' => $period, 'rawto' => null]); ?>"><?= Period::load($period)->navlabel ?></a>
