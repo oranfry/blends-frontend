@@ -7,7 +7,7 @@
     };
 
     window.closeModals = function() {
-        $('.modal--open, .inline-modal--open').removeClass('modal--open inline-modal--open');
+        $('.modal--open, .inline-modal--open, .nav-modal--open').removeClass('modal--open inline-modal--open nav-modal--open');
         $('.modal-breakout').remove();
     };
 
@@ -113,49 +113,52 @@
     $('body').on('click', '.modal-breakout', closeModals);
     $('.close-modal').on('click', closeModals);
 
-    $('.inline-modal-trigger').on('click', function(e){
+    $('.inline-modal-trigger, .nav-modal-trigger').on('click', function(e){
+        var prefix = 'inline';
+
+        if ($(this).is('.nav-modal-trigger')) {
+            prefix = 'nav';
+        }
+
         e.preventDefault();
 
         var done = false;
 
         $(this).prevAll().each(function() {
-            if (done) {
+            if (done || !$(this).is('.' + prefix + '-modal')) {
                 return;
             }
 
-            if ($(this).is('.inline-modal')) {
-                $(this).addClass('inline-modal--open');
-                $(this).css({width: '', left: '', right: ''});
+            $(this).addClass(prefix + '-modal--open');
+            $(this).css({width: '', left: '', right: ''});
 
-                var that = this;
+            var that = this;
 
-                var leftHidden = function () {
-                    return $(that).offset().left < 15;
-                };
+            var leftHidden = function () {
+                return $(that).offset().left < 15;
+            };
 
-                var rightHidden = function () {
-                    return $(that).offset().left + $(that).width() > $(window).width() - 15;
-                };
+            var rightHidden = function () {
+                return $(that).offset().left + $(that).width() > $(window).width() - 15;
+            };
 
-                if (leftHidden()) {
-                    var right = 0;
-                    for (var right = 0; right < 100 && leftHidden(); right++) {
-                        $(this).css('right', -right + 'px');
-                    }
-                } else if (rightHidden()) {
-                    var left = 0;
-                    for (var left = 0; left < 1000 && rightHidden(); left++) {
-                        $(this).css({width: $(this).width() + 'px', left: -left + 'px'});
-                    }
+            if (leftHidden() && !rightHidden()) {
+                var right = 0;
+                for (var right = 0; right < 1000 && leftHidden() && !rightHidden(); right++) {
+                    $(this).css('right', -right + 'px');
                 }
-
-                $('<div class="modal-breakout" style="background-color: transparent">').insertAfter(this);
-                done = true;
+            } else if (rightHidden() && !leftHidden()) {
+                var left = 0;
+                for (var left = 0; left < 1000 && rightHidden() && !leftHidden(); left++) {
+                    $(this).css({width: $(this).width() + 'px', left: -left + 'px'});
+                }
             }
+
+            $('<div class="modal-breakout">').insertAfter(this);
+            done = true;
         });
     });
 
-    $('body').on('click', '.modal-breakout', closeModals);
 
     $('.open-custom-daterange:not(.current)').on('click', function(e){
         e.preventDefault();
@@ -417,13 +420,15 @@
             $(this).toggleClass('navset--nobar', nobar);
 
             if (prevNavsetTop !== null && nobar) {
-                $('<br>').insertBefore($(this));
+                $('<br class="navbr">').insertBefore($(this));
             }
 
             prevNavsetTop = navsetTop;
         });
 
         $('.navbar-placeholder').height($('.navbar').outerHeight() + 'px');
+
+        $('body').toggleClass('wsidebar', $(window).width() >= 1200);
     };
 
     var resizeTimer = null;
@@ -624,7 +629,6 @@
 
         if (!selecting) {
             $table.find('.when-selecting input[type="checkbox"]').prop('checked', false).each(function(){
-                console.log(this);
                 $(this).closest('tr[data-id]').removeClass('selected');
             });
         }

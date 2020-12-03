@@ -69,32 +69,34 @@ class Daterange extends \ContextVariableSet
                 date('D j F Y', strtotime($this->from)) . ' ~ ' . date('D j F Y', strtotime($this->to));
         } ?>
             <div class="navset">
-                <div class="inline-modal">
-                    <div class="nav-dropdown">
-                         <?php foreach (BlendsConfig::get(@$_SESSION['AUTH'])->periods as $period): ?>
-                            <?php $current = (!$this->rawto && $period == $this->period); ?>
-                            <a class="<?= $current ? 'current' : '' ?>" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['period' => $period, 'rawto' => null]); ?>"><?= Period::load($period)->navlabel ?></a>
-                        <?php endforeach ?>
-                        <?php if (!@$current_period->suppress_custom): ?>
-                            <a class="open-custom-daterange <?= $this->rawto ? 'current' : '' ?>">Custom</a>
-                        <?php endif ?>
-                        <div class="standard-daterange" style="<?= $this->rawto ? 'display: none' : '' ?>; margin-bottom: 0.5em">
-                            <input class="cv-surrogate cv-manip" data-for="<?= $this->prefix ?>__rawrawfrom" type="text" value="<?= $this->from ?>" data-manips="<?= $this->prefix ?>__rawto=" style="width: 6em"><br>
-                        </div>
-                        <div class="custom-daterange" style="<?= $this->rawto ? '' : 'display: none' ?>">
-                            <input class="cv-surrogate cv-manip no-autosubmit" data-for="<?= $this->prefix ?>__rawrawfrom" type="text" value="<?= $this->from ?>" data-manips="<?= $this->prefix ?>__rawto=<?= $this->to ?>" style="width: 6em"><br>
-                            to<br>
-                            <input class="cv-surrogate no-autosubmit" data-for="<?= $this->prefix ?>__rawto" type="text" value="<?= $this->rawto ?: $this->to ?>" style="width: 6em"><br>
-                            <a class="cv-manip" data-manips="">Apply</a>
+                <div class="inline-rel">
+                    <div class="inline-modal">
+                        <div class="nav-dropdown">
+                             <?php foreach (BlendsConfig::get(@$_SESSION['AUTH'])->periods as $period): ?>
+                                <?php $current = (!$this->rawto && $period == $this->period); ?>
+                                <a class="<?= $current ? 'current' : '' ?>" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['period' => $period, 'rawto' => null]); ?>"><?= Period::load($period)->navlabel ?></a>
+                            <?php endforeach ?>
+                            <?php if (!@$current_period->suppress_custom): ?>
+                                <a class="open-custom-daterange <?= $this->rawto ? 'current' : '' ?>">Custom</a>
+                            <?php endif ?>
+                            <div class="standard-daterange" style="<?= $this->rawto ? 'display: none' : '' ?>; margin-bottom: 0.5em">
+                                <input class="cv-surrogate cv-manip" data-for="<?= $this->prefix ?>__rawrawfrom" type="text" value="<?= $this->from ?>" data-manips="<?= $this->prefix ?>__rawto=" style="width: 6em"><br>
+                            </div>
+                            <div class="custom-daterange" style="<?= $this->rawto ? '' : 'display: none' ?>">
+                                <input class="cv-surrogate cv-manip no-autosubmit" data-for="<?= $this->prefix ?>__rawrawfrom" type="text" value="<?= $this->from ?>" data-manips="<?= $this->prefix ?>__rawto=<?= $this->to ?>" style="width: 6em"><br>
+                                to<br>
+                                <input class="cv-surrogate no-autosubmit" data-for="<?= $this->prefix ?>__rawto" type="text" value="<?= $this->rawto ?: $this->to ?>" style="width: 6em"><br>
+                                <a class="cv-manip" data-manips="">Apply</a>
+                            </div>
                         </div>
                     </div>
+                    <a class="inline-modal-trigger"><?= strtoupper($this->rawto ? 'c' : $current_period->id) ?></a>
+                    <?php if (!@$current_period->suppress_nav): ?>
+                        <div class="drnav <?= $highlight[0] ?>"><a class="icon icon--arrowleft" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['rawrawfrom'=> $prevfrom]); ?>"></a></div>
+                        <div class="drnav <?= $highlight[1] ?>"><a class="icon icon--dot" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['rawrawfrom'=> $currfrom]); ?>"></a></div>
+                        <div class="drnav <?= $highlight[2] ?>"><a class="icon icon--arrowright" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['rawrawfrom'=> $nextfrom]); ?>"></a></div>
+                    <?php endif ?>
                 </div>
-                <a class="inline-modal-trigger"><?= strtoupper($this->rawto ? 'c' : $current_period->id) ?></a>
-                <?php if (!@$current_period->suppress_nav): ?>
-                    <div class="drnav <?= $highlight[0] ?>"><a class="icon icon--arrowleft" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['rawrawfrom'=> $prevfrom]); ?>"></a></div>
-                    <div class="drnav <?= $highlight[1] ?>"><a class="icon icon--dot" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['rawrawfrom'=> $currfrom]); ?>"></a></div>
-                    <div class="drnav <?= $highlight[2] ?>"><a class="icon icon--arrowright" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['rawrawfrom'=> $nextfrom]); ?>"></a></div>
-                <?php endif ?>
                 <input class="cv" type="hidden" name="<?= $this->prefix ?>__period" value="<?= $this->period ?>">
                 <input class="cv" type="hidden" name="<?= $this->prefix ?>__rawrawfrom" value="<?= $this->rawrawfrom ?>">
                 <input class="cv" type="hidden" name="<?= $this->prefix ?>__rawto" value="<?= $this->rawto ?>">

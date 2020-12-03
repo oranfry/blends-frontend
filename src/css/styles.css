@@ -12,7 +12,7 @@ html {
 }
 
 body {
-    text-align: center;
+    text-align: left;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -22,13 +22,11 @@ h1, h2, h3, h4, h5, h6 {
 nav {
     position: relative;
     display: inline-block;
-    padding: 0.3em;
     text-align: center;
-    margin-right: 1.2em;
-    margin-left: 1.2em;
     font-size: 1em;
     white-space: nowrap;
     line-height: 1em;
+    margin-top: 1em;
 }
 
 nav a {
@@ -59,6 +57,10 @@ nav a span {
 
 nav:empty {
     display: none;
+}
+
+body.wsidebar .wrapper {
+    padding-left: 280px;
 }
 
 .line {
@@ -228,7 +230,7 @@ select {
 table {
 	border-collapse: collapse;
     box-sizing: border-box;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     margin-bottom: 1em;
 }
 
@@ -344,6 +346,14 @@ th.right, td.right {
     right: 0;
     background-color: rgba(0, 0, 0, 0.2);
     z-index: 10000;
+}
+
+.drnav {
+    display: inline-block;
+}
+
+.nowrap {
+    white-space: nowrap;
 }
 
 /* Textarea not ridiculous size */
@@ -726,59 +736,6 @@ input[type="number"]::-webkit-inner-spin-button {
     background: transparent;
 }
 
-.drnav {
-    display: inline-block;
-}
-
-.navset {
-    display: inline-block;
-    cursor: pointer;
-    position: relative;
-}
-
-.navset:not(.navset--nobar):not(:first-child):before {
-    display: inline-block;
-    width: 0;
-    height: 1em;
-    border-left: 1px solid #aaa;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
-    content: "";
-}
-
-.navbar-placeholder {
-    margin-bottom: 1em;
-}
-
-.navbar {
-    margin: 0;
-    top: 0;
-    position: fixed;
-    text-align: center;
-    padding: 0.5em;
-    background: #ccc;
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 1000;
-}
-
-.nav-dropdown--spacey {
-    margin: 1em;
-}
-
-.nav-dropdown a {
-    display: block;
-    white-space: nowrap;
-    text-decoration: none;
-    color: #444;
-    padding-left: 1em;
-    padding-right: 1em;
-}
-
-.nowrap {
-    white-space: nowrap;
-}
-
 .file-field-controls__change .button:not(:first-child) {
     margin-left: 1em;
 }
@@ -807,12 +764,32 @@ input[type="number"]::-webkit-inner-spin-button {
     filter: grayscale(100%) brightness(2);
 }
 
-@media screen {
-    .wrapper {
-        max-width: 960px;
-        margin: 0 auto;
-    }
+.inline-rel {
+    position: relative;
+    display: inline;
+}
 
+.nav-dropdown--spacey {
+    margin: 1em;
+}
+
+.inline-dropdown {
+    text-align: left;
+}
+
+.inline-dropdown a {
+    display: block;
+    padding: 0.1em 0.4em;
+}
+
+.nav-dropdown a, .nav-dropdown .nav-dropdown__item {
+    white-space: nowrap;
+    text-decoration: none;
+    color: #444;
+    padding: 0.2em 1em;
+}
+
+@media screen {
     nav a img, .icon {
         filter: grayscale(100%) brightness(0.5);
         -webkit-filter: grayscale(100%) brightness(0.5);
@@ -940,5 +917,158 @@ input[type="number"]::-webkit-inner-spin-button {
 
     .calendar-month .eventcell {
         font-size: 0.7em;
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .only-super1200 {
+        display: none;
+    }
+
+    .navset {
+        display: inline-block;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .navset:not(.navset--nobar):not(:first-child):before {
+        display: inline-block;
+        width: 0;
+        height: 1em;
+        border-left: 1px solid #aaa;
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+        content: "";
+    }
+
+    .navbar-placeholder {
+        margin-bottom: 1em;
+    }
+
+    .navbar {
+        margin: 0;
+        top: 0;
+        position: fixed;
+        padding: 0.5em;
+        background: #ccc;
+        width: 100%;
+        box-sizing: border-box;
+        z-index: 1000;
+    }
+
+    .nav-dropdown > a, .nav-dropdown .nav-dropdown__item {
+        display: block;
+        white-space: nowrap;
+        text-decoration: none;
+        color: #444;
+    }
+
+    .nav-dropdown > a, .nav-dropdown > i {
+        padding: 0.2em 1em;
+    }
+
+    .nav-modal nav {
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-modal nav a {
+        background: white;
+    }
+
+    .nav-modal {
+        position: absolute;
+        top: 0.5em;
+        background-color: white;
+        z-index: 10001;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 0;
+        left: 0.5em;
+    }
+
+    .nav-modal:not(.nav-modal--open) {
+        display: none;
+    }
+
+    .nav-title {
+        display: none;
+    }
+
+    body {
+        text-align: center;
+    }
+
+    table, .wrapper {
+        margin: 0 auto;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .only-sub1200 {
+        display: none;
+    }
+
+    .navbar-placeholder {
+        display: none;
+    }
+
+    .navbar {
+        font-size: 1.1em;
+        margin: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        text-align: left;
+        padding: 0.5em;
+        background: #e7e7e7;
+        border-right: 1px solid #d7d7d7;
+        width: 250px;
+        box-sizing: border-box;
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    .nav-dropdown a {
+        padding: 0.2em;
+    }
+
+    .navbar .listable a {
+        display: block;
+        text-decoration: none;
+        color: #333;
+    }
+
+    .nav-title {
+        margin-bottom: 0.4em;
+    }
+
+    .nav-title, .listable a {
+        padding: 0.2em;
+    }
+
+    .nav-title {
+        color: #999;
+        font-family: monospace;
+    }
+
+    .navbar .navbr {
+        display: none;
+    }
+
+    .navset {
+        margin-bottom: 1.5em;
+    }
+
+    .navbar .inline-modal.inline-modal--right {
+        left: 0.5em;
+    }
+
+    .navbar .icon {
+        width: 1.3em;
+        height: 1.3em;
+        line-height: 1.3em;
     }
 }

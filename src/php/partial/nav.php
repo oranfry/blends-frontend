@@ -1,3 +1,5 @@
+<?php use contextvariableset\Hidden; ?>
+<?php use contextvariableset\Repeater; ?>
 <div class="navbar-placeholder" style="height: 2.5em;">&nbsp;</div>
 <div class="instances navbar printhide">
     <form id="instanceform">
@@ -11,81 +13,36 @@
                         $query = $query ? '?' . $query : '';
                     ?>
                     <div class="navset">
-                        <div class="inline-modal">
+                        <div class="nav-title">Blends</div>
+                        <div class="nav-modal listable">
                             <div class="nav-dropdown">
-                                <?php
-                                    $ddlabel = null;
-                                    $current_navgroup = null;
-                                    $current_navgroup_items = [];
-
-                                    foreach ($nav as $key => $value) {
-                                        if (is_string($key)) {
-                                            $blend = $blend_lookup[$value[0]];
-
-                                            if (!$blend) {
-                                                error_response('No such blend ' . $value[0]);
-                                            }
-
-                                            if (in_array(BLEND_NAME, $value)) {
-                                                $current_navgroup = $key;
-                                                $current_navgroup_items = $value;
-                                                $ddlabel = $current_navgroup;
-                                            }
-
-                                            $current = $current_navgroup == $key;
-                                            $label = $key;
-                                        } else {
-                                            $blend = $blend_lookup[$value];
-
-                                            if (!$blend) {
-                                                error_response('No such blend ' . $value);
-                                            }
-
-                                            if ($blend->name == BLEND_NAME) {
-                                                $ddlabel = @$blend->label ?? $blend->name;
-                                            }
-
-                                            $current = $blend->name == BLEND_NAME;
-                                            $label = @$blend->label ?? $blend->name;
-                                        }
-                                        ?><a href="/blend/<?= $blend->name ?><?= $query ?>" <?= $current ? 'class="current"' : '' ?>><?= $label ?></a><?php
-                                    }
-                                ?>
+                                <?php foreach ($blend_lookup as $name => $blend) : ?>
+                                    <a href="/blend/<?= $blend->name ?><?= $query ?>" <?= BLEND_NAME == $name ? 'class="current"' : '' ?>><?= $blend->name ?></a>
+                                <?php endforeach ?>
                             </div>
                         </div>
-                        <span class="inline-modal-trigger"><?= $ddlabel ?></span>
+                        <span class="nav-modal-trigger only-sub1200"><?= BLEND_NAME ?></span>
                     </div>
-
-                    <?php if (count($current_navgroup_items) > 1): ?>
-                        <div class="navset">
-                            <div class="inline-modal">
-                                <div class="nav-dropdown">
-                                    <?php
-                                        foreach ($current_navgroup_items as $value) {
-                                            $blend = $blend_lookup[$value];
-
-                                            if (!$blend) {
-                                                error_response('No such blend ' . $value);
-                                            }
-
-                                            ?><a href="/blend/<?= $blend->name ?><?= $query ?>" <?= $blend->name == BLEND_NAME ? 'class="current"' : '' ?>><?= @$blend->label ?? $blend->name ?></a><?php
-                                        }
-                                    ?>
-                                </div>
-                            </div>
-                            <span class="inline-modal-trigger"><?= @Blend::load(@$_SESSION['AUTH'], BLEND_NAME)->label ?? BLEND_NAME ?></span>
-                        </div>
-                    <?php endif ?>
                 <?php endif ?>
-                <?php
-                    foreach (ContextVariableSet::getAll() as $active) {
-                        $active->tinydisplay();
-                        $active->display();
-                    }
-                ?>
+
+                <?php $mainFilters = ContextVariableSet::getAll(); ?>
+                <?php $shownTitle = false; ?>
+                <?php if (count($mainFilters)) : ?>
+                    <?php foreach ($mainFilters as $active): ?>
+                        <?php if (!$active instanceof Hidden && !$active instanceof Repeater && !$shownTitle): ?>
+                            <div class="nav-title">Main Filters</div>
+                            <?php $shownTitle = true; ?>
+                        <?php endif ?>
+                        <?php $active->tinydisplay(); ?>
+                        <?php $active->display(); ?>
+                    <?php endforeach ?>
+                <?php endif ?>
             <?php endif ?>
             <?php @include APP_HOME . '/src/php/partial/nav/' . PAGE . '.php'; ?>
-            <div class="navset"><i class="icon icon--leave trigger-logout" title="Logout <?= Blends::token_username($_SESSION['AUTH']) ?>"></i></div>
+            <div class="navset">
+                <div class="nav-title">Logout</div>
+                <i class="icon icon--leave trigger-logout" title="Logout <?= Blends::token_username($_SESSION['AUTH']) ?>"></i>
+            </div>
             <input type="hidden" name="_returnurl" value="<?= htmlspecialchars_decode($_SERVER['REQUEST_URI']) ?>">
             <div id="new-vars-here" style="display: none"></div>
         </div>

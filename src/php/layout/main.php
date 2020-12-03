@@ -13,22 +13,25 @@
             tr.today td,
             .periodchoice.periodchoice--current,
             .nav-dropdown a.current,
-            .drnav.current {
+            .drnav.current,
+            .cv-manip.current {
                 background-color: #<?= HIGHLIGHT ?>;
             }
 
             .button.button--main {
                 border: 1px solid #<?= adjustBrightness(HIGHLIGHT, -60) ?>
             }
-
         </style>
 </head>
 <body class="wsidebar">
     <?php require APP_HOME . '/src/php/partial/nav.php'; ?>
-    <?php if (@$GLOBALS['title']): ?>
-        <h3><?= $GLOBALS['title'] ?></h3>
-    <?php endif ?>
-    <?php require APP_HOME . '/src/php/partial/content/' . PAGE . '.php'; ?>
+    <div class="wrapper">
+        <?php if (@$GLOBALS['title']): ?>
+            <h3><?= $GLOBALS['title'] ?></h3>
+        <?php endif ?>
+        <?php require APP_HOME . '/src/php/partial/content/' . PAGE . '.php'; ?>
+    </div>
+
     <?php
         foreach (ContextVariableSet::getAll() as $active) {
             $active->enddisplay();
