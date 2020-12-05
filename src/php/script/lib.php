@@ -20,11 +20,9 @@ session_start();
 function init_app()
 {
     if (
-        @$_SESSION["AUTH"]
+        !preg_match(',^/(|logout|change-token)$,', $_SERVER['REQUEST_URI'])
         &&
-        !preg_match(',^/$,', $_SERVER['REQUEST_URI'])
-        &&
-        !Blends::verify_token($_SESSION['AUTH'])
+        !Blends::verify_token(@$_SESSION['AUTH'])
     ) {
         doover();
     }
