@@ -10,9 +10,13 @@ if (@$_POST['password'] && @$_POST['username']) {
 }
 
 if (@$_SESSION['AUTH']) {
-    $nav = BlendsConfig::get($_SESSION['AUTH'])->nav;
-    $nav0 = array_keys($nav)[0];
-    $blend = is_string($nav0) ? $nav[$nav0][0] : $nav[0];
+    $blends = @BlendsConfig::get($_SESSION['AUTH'])->blends;
+
+    if (!$blends || !count($blends)) {
+        error_response('No blends set up');
+    }
+
+    $blend = array_keys($blends)[0];
 
     header("Location: /blend/{$blend}");
     die('Redirecting...');
@@ -22,7 +26,7 @@ if (isset($_POST['password']) && isset($_POST['username'])) {
     $message = "Incorrect username or password";
 }
 
-define('LAYOUT', 'login');
+// define('LAYOUT', 'login');
 
 return [
     'message' => $message,

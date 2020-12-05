@@ -709,10 +709,6 @@ input[type="number"]::-webkit-inner-spin-button {
     color: #333;
 }
 
-.sidebar-backlink {
-    display: block;
-}
-
 .filter {
     display: block;
     background: #ccc;
@@ -1069,5 +1065,17 @@ input[type="number"]::-webkit-inner-spin-button {
         width: 1.3em;
         height: 1.3em;
         line-height: 1.3em;
+    }
+
+    .sidebar-backlink-container {
+        text-align: right;
+    }
+
+    .sidebar-backlink {
+        display: inline-block;
+        padding: 0.4em 1em;
+        border: 1px solid #ccc;
+        background: white;
+        border-radius: 5px;
     }
 }

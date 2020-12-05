@@ -16,7 +16,12 @@ foreach (array_keys(BlendsConfig::get(@$_SESSION['AUTH'])->blends) as $name) {
 
 unset($_blend);
 
-$blend = $blend_lookup[BLEND_NAME];
+$blend = @$blend_lookup[BLEND_NAME];
+
+if (!$blend) {
+    header("Location: /");
+}
+
 $all_fields = $blend->fields;
 
 $types = [];
