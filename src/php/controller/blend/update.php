@@ -2,7 +2,7 @@
 define('LAYOUT', 'json');
 
 $data = json_decode(file_get_contents('php://input'));
-$blend = Blend::load(@$_SESSION['AUTH'], BLEND_NAME);
+$blend = Blend::load(AUTH_TOKEN, BLEND_NAME);
 
 if (@$_GET['selection']) {
     $filters = [
@@ -18,7 +18,7 @@ if (@$_GET['selection']) {
     $filters = get_current_filters($blend->fields);
 }
 
-$result = $blend->update($_SESSION['AUTH'], $filters, $data);
+$result = $blend->update(AUTH_TOKEN, $filters, $data);
 
 return [
     'data' => $result,

@@ -1,15 +1,15 @@
 <?php
-list($user) = Blend::load($_SESSION['AUTH'], 'users')->search($_SESSION['AUTH'], [
+list($user) = Blend::load(AUTH_TOKEN, 'users')->search(AUTH_TOKEN, [
     (object) ['field' => 'username', 'cmp' => '=', 'value' => $_POST['username']],
 ]);
 
-list($token) = Blend::load($_SESSION['AUTH'], 'tokens')->search($_SESSION['AUTH'], [
-    (object) ['field' => 'token', 'cmp' => '=', 'value' => $_SESSION['AUTH']],
+list($token) = Blend::load(AUTH_TOKEN, 'tokens')->search(AUTH_TOKEN, [
+    (object) ['field' => 'token', 'cmp' => '=', 'value' => AUTH_TOKEN],
 ]);
 
 $token->user = $user->id;
 
-list($token) = Linetype::load($_SESSION['AUTH'], 'token')->save($_SESSION['AUTH'], [$token]);
+list($token) = Linetype::load(AUTH_TOKEN, 'token')->save(AUTH_TOKEN, [$token]);
 
 header("Location: /");
 die();

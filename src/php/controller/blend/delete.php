@@ -1,7 +1,7 @@
 <?php
 define('LAYOUT', 'json');
 
-$blend = Blend::load(@$_SESSION['AUTH'], BLEND_NAME);
+$blend = Blend::load(AUTH_TOKEN, BLEND_NAME);
 
 if (@$_GET['selection']) {
     $filters = [
@@ -17,7 +17,7 @@ if (@$_GET['selection']) {
     $filters = get_current_filters($blend->fields);
 }
 
-$result = $blend->delete($_SESSION['AUTH'], $filters);
+$result = $blend->delete(AUTH_TOKEN, $filters);
 
 return [
     'data' => $result,

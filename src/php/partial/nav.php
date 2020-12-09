@@ -36,10 +36,10 @@
                 <?php endif ?>
             <?php endif ?>
             <?php @include APP_HOME . '/src/php/partial/nav/' . PAGE . '.php'; ?>
-            <?php if (@$_SESSION['AUTH']): ?>
+            <?php if (defined('AUTH_TOKEN')): ?>
                 <div class="navset">
                     <div class="nav-title">Logout</div>
-                    <i class="icon icon--leave trigger-logout" title="Logout <?= Blends::token_username($_SESSION['AUTH']) ?>"></i>
+                    <i class="icon icon--leave trigger-logout" title="Logout <?= Blends::token_username(AUTH_TOKEN) ?>"></i>
                 </div>
             <?php endif ?>
             <input type="hidden" name="_returnurl" value="<?= htmlspecialchars_decode($_SERVER['REQUEST_URI']) ?>">
@@ -49,10 +49,10 @@
     <form id="tokenform" action="/change-token" method="post" class="only-super1200">
         <div class="navset">
             <div class="nav-title">Token</div>
-            <input type="text" name="token" value="<?= @$_SESSION['AUTH'] ?>" style="width: 100%; padding: 0.5em">
+            <input type="text" name="token" value="<?= defined('AUTH_TOKEN') ? AUTH_TOKEN : '' ?>" style="width: 100%; padding: 0.5em">
         </div>
     </form>
-    <?php if (defined('ROOT_USERNAME') && Blends::token_username(@$_SESSION['AUTH']) == ROOT_USERNAME): ?>
+    <?php if (defined('ROOT_USERNAME') && defined('AUTH_TOKEN') && Blends::token_username(AUTH_TOKEN) == ROOT_USERNAME): ?>
         <form id="tokenform" action="/switch-user" method="post" class="only-super1200">
             <div class="navset">
                 <div class="nav-title">Switch User</div>

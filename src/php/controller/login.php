@@ -5,12 +5,16 @@ if (@$_POST['password'] && @$_POST['username']) {
     $token = Blends::login($_POST['username'], $_POST['password']);
 
     if ($token) {
+        if (!defined('AUTH_TOKEN')) {
+            define('AUTH_TOKEN', $token);
+        }
+
         $_SESSION['AUTH'] = $token;
     }
 }
 
-if (@$_SESSION['AUTH']) {
-    $blends = @BlendsConfig::get($_SESSION['AUTH'])->blends;
+if (defined('AUTH_TOKEN')) {
+    $blends = @BlendsConfig::get(AUTH_TOKEN)->blends;
 
     if (!$blends || !count($blends)) {
         error_response('No blends set up');

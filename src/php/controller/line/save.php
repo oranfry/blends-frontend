@@ -4,7 +4,7 @@ use contextvariableset\Daterange;
 
 define('LAYOUT', 'json');
 
-$linetype = Linetype::load(@$_SESSION['AUTH'], LINETYPE_NAME);
+$linetype = Linetype::load(AUTH_TOKEN, LINETYPE_NAME);
 $line_template =  json_decode(file_get_contents('php://input'));
 $datefield = null;
 
@@ -45,5 +45,5 @@ foreach ($dates as $date) {
 }
 
 return [
-    'data' => $linetype->save($_SESSION['AUTH'], $lines),
+    'data' => $linetype->save(AUTH_TOKEN, $lines),
 ];

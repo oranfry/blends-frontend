@@ -8,8 +8,8 @@ use contextvariableset\Showas;
 $blends = [];
 $blend_lookup = [];
 
-foreach (array_keys(BlendsConfig::get(@$_SESSION['AUTH'])->blends) as $name) {
-    $_blend = Blend::load(@$_SESSION['AUTH'], $name);
+foreach (array_keys(BlendsConfig::get(AUTH_TOKEN)->blends) as $name) {
+    $_blend = Blend::load(AUTH_TOKEN, $name);
     $blends[] = $_blend;
     $blend_lookup[$name] = $_blend;
 }
@@ -35,7 +35,7 @@ foreach ($blend->linetypes as $linetype) {
 }
 
 $linetypes = array_map(function($v){
-    return Linetype::load(@$_SESSION['AUTH'], $v);
+    return Linetype::load(AUTH_TOKEN, $v);
 }, $blend->linetypes);
 
 $classes = filter_objects($all_fields, 'type', 'is', 'class');
@@ -86,7 +86,7 @@ foreach ($all_fields as $field) {
             if (is_array($field->filteroptions)) {
                 $cvs->options = $field->filteroptions;
             } elseif (is_callable($field->filteroptions)) {
-                $cvs->options = ($field->filteroptions)(@$_SESSION['AUTH']);
+                $cvs->options = ($field->filteroptions)(AUTH_TOKEN);
             } else {
                 error_response('filteroptions should be an array or a closure');
             }
@@ -125,7 +125,7 @@ foreach ($fields as $field) {
     }
 }
 
-$records = $blend->search(@$_SESSION['AUTH'], $filters);
+$records = $blend->search(AUTH_TOKEN, $filters);
 
 if ($records === false) {
     doover();
@@ -160,14 +160,14 @@ if ($groupfield) {
             if (in_array($groupby_field->type, ['date', 'text'])) {
                 return
                     strcmp($a->{$fieldname}, $b->{$fieldname}) ?:
-                    ($a->id - $b->id) ?:
+                    strcmp($a->id, $b->id) ?:
                     0;
             }
 
             if ($groupby_field->type == 'number') {
                 return
                     ($a->{$fieldname} <=> $b->{$fieldname}) ?:
-                    ($a->id - $b->id) ?:
+                    strcmp($a->id, $b->id) ?:
                     0;
             }
 
@@ -182,7 +182,7 @@ if (count(filter_objects($fields, 'summary', 'is', 'sum'))) {
 
     if ($blend->past && @$daterange && $daterange->from) {
         $summary_filters = array_merge(@$blend->filters ?? [], get_past_filters($all_fields));
-        $past_summary = $blend->summary($_SESSION['AUTH'], $summary_filters);
+        $past_summary = $blend->summary(AUTH_TOKEN, $summary_filters);
 
         if ($past_summary === false) {
             doover();

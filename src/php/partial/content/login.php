@@ -1,5 +1,5 @@
 <div class="login-page">
-    <h1><?= BlendsConfig::get(@$_SESSION['AUTH'])->instance_name ?: 'Blends' ?></h1>
+    <h1><?= BlendsConfig::get(AUTH_TOKEN)->instance_name ?: 'Blends' ?></h1>
     <form action="/" method="post">
         <div class="cred-line">
             <p>Username</p>

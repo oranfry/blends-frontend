@@ -4,7 +4,7 @@
         <meta name="viewport" content="width=320, initial-scale=1, user-scalable=no">
         <link rel="stylesheet" type="text/css" href="/css/styles.<?= latest('css') ?>.css">
         <meta charset="utf-8"/>
-        <title><?= BlendsConfig::get(@$_SESSION['AUTH'])->instance_name ?: 'Blends' ?></title>
+        <title><?= BlendsConfig::get(defined('AUTH_TOKEN') ? AUTH_TOKEN : null)->instance_name ?: 'Blends' ?></title>
         <style>
             .appcolor-bg,
             .button.button--main,
@@ -38,12 +38,12 @@
         }
     ?>
 
-    <?php if (@$_SESSION['AUTH']): ?>
+    <?php if (defined('AUTH_TOKEN')): ?>
         <script>
-            <?php $username = Blends::token_username($_SESSION['AUTH']); ?>
+            <?php $username = Blends::token_username(AUTH_TOKEN); ?>
             <?= "window.username = '{$username}';"; ?>
 
-            <?php $user = Blends::token_user($_SESSION['AUTH']); ?>
+            <?php $user = Blends::token_user(AUTH_TOKEN); ?>
             <?= 'window.user = ' . ($user ? "'{$user}'" : 'null') . ";"; ?>
 
             <?php foreach (PAGE_PARAMS as $key => $value): ?>

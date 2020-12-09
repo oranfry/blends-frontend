@@ -203,7 +203,7 @@
         }
 
         var handleSave = function() {
-            $.ajax('/api/blend/' + BLEND_NAME + '/update?' + query, {
+            $.ajax('/ajax/blend/' + BLEND_NAME + '/update?' + query, {
                 method: 'post',
                 contentType: false,
                 processData: false,
@@ -266,7 +266,7 @@
         });
 
         var handleSave = function() {
-            $.ajax('/api/' + blend + '/' + linetype + '/add?' + getFiltersQuery(), {
+            $.ajax('/ajax/' + blend + '/' + linetype + '/add?' + getFiltersQuery(), {
                 method: 'post',
                 contentType: false,
                 processData: false,
@@ -343,7 +343,7 @@
             query = getFiltersQuery();
         }
 
-        $.ajax('/api/blend/' + BLEND_NAME + '/delete?' + query, {
+        $.ajax('/ajax/blend/' + BLEND_NAME + '/delete?' + query, {
             method: 'post',
             data: {},
             success: function(data) {
@@ -371,7 +371,7 @@
             query = getFiltersQuery();
         }
 
-        $.ajax('/api/blend/' + BLEND_NAME + '/print?' + query, {
+        $.ajax('/ajax/blend/' + BLEND_NAME + '/print?' + query, {
             method: 'post',
             data: {},
             error: function(data){
@@ -505,7 +505,7 @@
             parentspec = '/' + parent;
         }
 
-        $.ajax('/api/' + type + '/' + id + '/' + action + parentspec, {
+        $.ajax('/ajax/' + type + '/' + id + '/' + action + parentspec, {
             method: 'post',
             data: {},
             success: function() {

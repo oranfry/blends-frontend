@@ -1,21 +1,21 @@
 <?php
-$linetype = Linetype::load(@$_SESSION['AUTH'], LINETYPE_NAME);
+$linetype = Linetype::load(AUTH_TOKEN, LINETYPE_NAME);
 
 $parenttype = null;
 $parentlink = null;
 $parentid = null;
 
 if (LINE_ID) {
-    $line = @$linetype->find_lines($_SESSION['AUTH'], [(object)['field' => 'id', 'value' => LINE_ID]])[0];
+    $line = @$linetype->find_lines(AUTH_TOKEN, [(object)['field' => 'id', 'value' => LINE_ID]])[0];
 
     if (!$line) {
         error_response('No such line', 400);
     }
 
-    $linetype->load_children($_SESSION['AUTH'], $line);
+    $linetype->load_children(AUTH_TOKEN, $line);
 }
 
-$suggested_values = $linetype->get_suggested_values(@$_SESSION['AUTH']);
+$suggested_values = $linetype->get_suggested_values(AUTH_TOKEN);
 
 $hasFileFields = in_array('file', array_map(function ($f) {
     return $f->type;

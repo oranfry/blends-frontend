@@ -13,19 +13,32 @@ define('CONTEXT', @$_GET['context'] ?: 'default');
 define('REFCOL', 'd8b0b0');
 define('MAX_COLUMN_WIDTH', 25);
 define('BACK', @$_GET['back'] ? base64_decode($_GET['back']) : null);
-set_highlight(@BlendsConfig::get(@$_SESSION['AUTH'])->highlight ?: REFCOL);
 
 session_start();
 
 function init_app()
 {
+    if (@$_SESSION['AUTH']) {
+        define('AUTH_TOKEN', $_SESSION['AUTH']);
+    } elseif ($headerauth = @getallheaders()['X-Auth']) {
+        define('AUTH_TOKEN', $headerauth);
+    }
+
+    // die($_SERVER['REQUEST_URI'] . ' ' . @AUTH_TOKEN);
+
     if (
         !preg_match(',^/(|logout|change-token)$,', $_SERVER['REQUEST_URI'])
         &&
-        !Blends::verify_token(@$_SESSION['AUTH'])
+        (
+            !defined('AUTH_TOKEN')
+            ||
+            !Blends::verify_token(AUTH_TOKEN)
+        )
     ) {
         doover();
     }
+
+    set_highlight(@BlendsConfig::get(AUTH_TOKEN)->highlight ?: REFCOL);
 }
 
 function get_current_filters($fields)

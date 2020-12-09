@@ -18,7 +18,7 @@ $adhocfilters = ContextVariableSet::get('adhocfilters');
         <div class="only-super1200 nav-title">Bulk Add</div>
         <div class="inline-rel">
             <div class="nav-modal">
-                <div class="nav-dropdown"><?php foreach ($types as $_type): ?><a href="#"><i class="icon icon--<?= Linetype::load(@$_SESSION['AUTH'], $_type)->icon ?> modal-trigger" data-for="bulk-add-modal_<?= $_type ?>"></i></a><?php endforeach ?></div>
+                <div class="nav-dropdown"><?php foreach ($types as $_type): ?><a href="#"><i class="icon icon--<?= Linetype::load(AUTH_TOKEN, $_type)->icon ?> modal-trigger" data-for="bulk-add-modal_<?= $_type ?>"></i></a><?php endforeach ?></div>
             </div>
             <i class="nav-modal-trigger icon icon--mono icon--plus only-sub1200"></i>
         </div>

@@ -1,9 +1,9 @@
 <?php
 define('LAYOUT', 'json');
 
-$linetype = Linetype::load(@$_SESSION['AUTH'], LINETYPE_NAME);
+$linetype = Linetype::load(AUTH_TOKEN, LINETYPE_NAME);
 
-$result = $linetype->delete($_SESSION['AUTH'], [(object) [
+$result = $linetype->delete(AUTH_TOKEN, [(object) [
     'field' => 'id',
     'value' => LINE_ID,
 ]]);

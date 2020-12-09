@@ -3,7 +3,7 @@
 <div class="samewidth">
     <div class="line">
         <form method="post" class="edit-form" <?= $hasFileFields ? 'enctype="multipart/form-data"' : '' ?>>
-            <?php if (defined('ROOT_USERNAME') && Blends::token_username($_SESSION['AUTH']) == ROOT_USERNAME): ?>
+            <?php if (defined('ROOT_USERNAME') && Blends::token_username(AUTH_TOKEN) == ROOT_USERNAME): ?>
                 <div class="form-row">
                     <div class="form-row__label">user</div>
                     <div class="form-row__value">
@@ -15,7 +15,7 @@
                 </div>
             <?php endif ?>
             <?php
-                foreach ($linetype->find_incoming_links($_SESSION['AUTH']) as $incoming) {
+                foreach ($linetype->find_incoming_links(AUTH_TOKEN) as $incoming) {
                     $parentaliasshort = $incoming->parent_link . '_' . $incoming->parent_linetype;
 
                     $field = (object) ['name' => $parentaliasshort];
@@ -74,7 +74,7 @@
     </div>
     <?php
         foreach (@$linetype->children ?: [] as $child) {
-            $child_linetype = Linetype::load(@$_SESSION['AUTH'], $child->linetype);
+            $child_linetype = Linetype::load(AUTH_TOKEN, $child->linetype);
             $records = $line->{$child->label};
             $types = [$child_linetype->name];
             $fields = @$child->list_fields ?: $child_linetype->fields;

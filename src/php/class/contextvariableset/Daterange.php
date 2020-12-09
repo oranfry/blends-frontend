@@ -19,7 +19,7 @@ class Daterange extends \ContextVariableSet
         parent::__construct($prefix);
 
         $data = $this->getRawData();
-        $this->period = @$data['period'] ?: BlendsConfig::get(@$_SESSION['AUTH'])->periods[0];
+        $this->period = @$data['period'] ?: BlendsConfig::get(AUTH_TOKEN)->periods[0];
         $current_period = Period::load($this->period);
 
         if (@$data['rawto']) {
@@ -72,7 +72,7 @@ class Daterange extends \ContextVariableSet
                 <div class="inline-rel">
                     <div class="inline-modal">
                         <div class="nav-dropdown nav-dropdown--always">
-                             <?php foreach (BlendsConfig::get(@$_SESSION['AUTH'])->periods as $period): ?>
+                             <?php foreach (BlendsConfig::get(AUTH_TOKEN)->periods as $period): ?>
                                 <?php $current = (!$this->rawto && $period == $this->period); ?>
                                 <a class="<?= $current ? 'current' : '' ?>" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['period' => $period, 'rawto' => null]); ?>"><?= Period::load($period)->navlabel ?></a>
                             <?php endforeach ?>
