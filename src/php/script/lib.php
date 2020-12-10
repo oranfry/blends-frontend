@@ -20,22 +20,31 @@ function postroute_app()
 {
     switch (AUTHSCHEME) {
         case 'header':
-            @define('AUTH_TOKEN', @getallheaders()['X-Auth']);
-        case 'cookie':
-            @define('AUTH_TOKEN', @$_SESSION['AUTH']);
+            define('AUTH_TOKEN', @getallheaders()['X-Auth']);
 
-            if (!AUTH_TOKEN || !Blends::verify_token(AUTH_TOKEN)) {
-                doover();
-            }
- 
+            break;
+        case 'cookie':
+            define('AUTH_TOKEN', @$_SESSION['AUTH']);
+
             break;
         case 'none':
             define('AUTH_TOKEN', null);
 
             break;
+        case 'deny':
+            error_response('Access Denied', 403);
+
         default:
             error_log('Invalid AUTHSCHEME: ' . AUTHSCHEME);
             error_response('Internal Server Error', 500);
+    }
+
+    if (
+        in_array(AUTHSCHEME, ['header', 'cookie'])
+        &&
+        (!AUTH_TOKEN || !Blends::verify_token(AUTH_TOKEN))
+    ) {
+        doover();
     }
 
     set_highlight(@BlendsConfig::get(AUTH_TOKEN)->highlight ?: REFCOL);
