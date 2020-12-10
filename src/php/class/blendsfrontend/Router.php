@@ -92,7 +92,7 @@ class Router extends \Router
          ***************************************/
 
         'GET /([a-z]+)' => ['LINETYPE_NAME', 'LINE_ID' =>  null, 'PAGE' => 'frontend/line'],
-        'POST /change-token' => ['PAGE' => 'frontend/change-token'],
+        'POST /change-token' => ['PAGE' => 'frontend/change-token', 'AUTHSCHEME' => 'none'],
         'POST /switch-user' => ['PAGE' => 'frontend/switch-user'],
 
         /***************************************
@@ -105,12 +105,12 @@ class Router extends \Router
          *              CLI ONLY               *
          ***************************************/
 
-        'CLI collisions \S+ \S+' =>     [null, 'MAX', 'TABLE', 'PAGE' => 'cli/collisions', 'LAYOUT' => 'cli'],
-        'CLI collisions \S+' =>         [null, 'MAX', 'TABLE' => null, 'PAGE' => 'cli/collisions', 'LAYOUT' => 'cli'],
-        'CLI export \S+ \S+' =>         [null, 'USERNAME', 'PASSWORD', 'PAGE' => 'cli/export', 'LAYOUT' => 'cli'],
-        'CLI import \S+ \S+' =>         [null, 'USERNAME', 'PASSWORD', 'PAGE' => 'cli/import', 'LAYOUT' => 'cli'],
-        'CLI expunge-tokens \S+ \S+' => [null, 'USERNAME', 'PASSWORD', 'PAGE' => 'cli/expunge-tokens', 'LAYOUT' => 'cli'],
-        'CLI reset-schema \S+ \S+' =>   [null, 'USERNAME', 'PASSWORD', 'PAGE' => 'cli/reset-schema', 'LAYOUT' => 'cli'],
+        'CLI collisions \S+ \S+' =>     [null, 'MAX', 'TABLE', 'PAGE' => 'cli/collisions', 'LAYOUT' => 'cli', 'AUTHSCHEME' => 'none'],
+        'CLI collisions \S+' =>         [null, 'MAX', 'TABLE' => null, 'PAGE' => 'cli/collisions', 'LAYOUT' => 'cli', 'AUTHSCHEME' => 'none'],
+        'CLI export \S+ \S+' =>         [null, 'USERNAME', 'PASSWORD', 'PAGE' => 'cli/export', 'LAYOUT' => 'cli', 'AUTHSCHEME' => 'onetime'],
+        'CLI import \S+ \S+' =>         [null, 'USERNAME', 'PASSWORD', 'PAGE' => 'cli/import', 'LAYOUT' => 'cli', 'AUTHSCHEME' => 'onetime'],
+        'CLI expunge-tokens \S+ \S+' => [null, 'USERNAME', 'PASSWORD', 'PAGE' => 'cli/expunge-tokens', 'LAYOUT' => 'cli', 'AUTHSCHEME' => 'onetime'],
+        'CLI reset-schema \S+ \S+' =>   [null, 'USERNAME', 'PASSWORD', 'PAGE' => 'cli/reset-schema', 'LAYOUT' => 'cli', 'AUTHSCHEME' => 'onetime'],
         'CLI h2n \S+ \S+' =>            [null, 'TABLE', 'H', 'PAGE' => 'cli/h2n', 'AUTHSCHEME' => 'none', 'LAYOUT' => 'cli'],
         'CLI n2h \S+ \S+' =>            [null, 'TABLE', 'N', 'PAGE' => 'cli/n2h', 'AUTHSCHEME' => 'none', 'LAYOUT' => 'cli'],
    ];
