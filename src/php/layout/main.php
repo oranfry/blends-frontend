@@ -4,7 +4,7 @@
         <meta name="viewport" content="width=320, initial-scale=1, user-scalable=no">
         <link rel="stylesheet" type="text/css" href="/css/styles.<?= latest('css') ?>.css">
         <meta charset="utf-8"/>
-        <title><?= BlendsConfig::get(defined('AUTH_TOKEN') ? AUTH_TOKEN : null)->instance_name ?: 'Blends' ?></title>
+        <title><?= BlendsConfig::get(AUTH_TOKEN)->instance_name ?: 'Blends' ?></title>
         <style>
             .appcolor-bg,
             .button.button--main,
@@ -38,7 +38,7 @@
         }
     ?>
 
-    <?php if (defined('AUTH_TOKEN')): ?>
+    <?php if (AUTH_TOKEN): ?>
         <script>
             <?php $username = Blends::token_username(AUTH_TOKEN); ?>
             <?= "window.username = '{$username}';"; ?>

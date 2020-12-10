@@ -16,26 +16,26 @@ define('BACK', @$_GET['back'] ? base64_decode($_GET['back']) : null);
 
 session_start();
 
-function init_app()
+function postroute_app()
 {
-    if (@$_SESSION['AUTH']) {
-        define('AUTH_TOKEN', $_SESSION['AUTH']);
-    } elseif ($headerauth = @getallheaders()['X-Auth']) {
-        define('AUTH_TOKEN', $headerauth);
-    }
+    switch (AUTHSCHEME) {
+        case 'header':
+            @define('AUTH_TOKEN', @getallheaders()['X-Auth']);
+        case 'cookie':
+            @define('AUTH_TOKEN', @$_SESSION['AUTH']);
 
-    // die($_SERVER['REQUEST_URI'] . ' ' . @AUTH_TOKEN);
+            if (!AUTH_TOKEN || !Blends::verify_token(AUTH_TOKEN)) {
+                doover();
+            }
+ 
+            break;
+        case 'none':
+            define('AUTH_TOKEN', null);
 
-    if (
-        !preg_match(',^/(|logout|change-token)$,', $_SERVER['REQUEST_URI'])
-        &&
-        (
-            !defined('AUTH_TOKEN')
-            ||
-            !Blends::verify_token(AUTH_TOKEN)
-        )
-    ) {
-        doover();
+            break;
+        default:
+            error_log('Invalid AUTHSCHEME: ' . AUTHSCHEME);
+            error_response('Internal Server Error', 500);
     }
 
     set_highlight(@BlendsConfig::get(AUTH_TOKEN)->highlight ?: REFCOL);
@@ -441,3 +441,23 @@ function doover()
     header('Location: /');
     die();
 }
+
+function get_query_filters()
+{
+    $filters = [];
+
+    foreach (explode('&', $_SERVER['QUERY_STRING']) as $v) {
+        $r = preg_split('/(\*=|>=|<=|~|=|<|>)/', urldecode($v), -1, PREG_SPLIT_DELIM_CAPTURE);
+
+        if (count($r) == 3) {
+            $filters[] = (object) [
+                'field' => $r[0],
+                'cmp' => $r[1],
+                'value' => $r[2],
+            ];
+        }
+    }
+
+    return $filters;
+}
+
